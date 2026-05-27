@@ -5,7 +5,7 @@ require("dotenv").config();
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.static("public"));
+app.use(express.static("PUBLIC"));
 
 app.post("/api/chat", async (req, res) => {
   const { prompt, system } = req.body;
