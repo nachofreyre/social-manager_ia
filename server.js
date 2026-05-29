@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const { MongoClient } = require("mongodb");
 require("dotenv").config();
 
 const app = express();
@@ -7,11 +8,95 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static("PUBLIC"));
 
+let db;
+
+async function connectDB() {
+  try {
+    const client = new MongoClient(process.env.MONGODB_URI);
+    await client.connect();
+    db = client.db("social-ai");
+    console.log("✅ Base de datos conectada");
+  } catch (err) {
+    console.error("Error conectando a MongoDB:", err.message);
+  }
+}
+
+// ── Perfil ──
+app.get("/api/profile", async (req, res) => {
+  try {
+    const profile = await db.collection("profile").findOne({ id: "main" });
+    res.json(profile || {});
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post("/api/profile", async (req, res) => {
+  try {
+    await db.collection("profile").updateOne(
+      { id: "main" },
+      { $set: { id: "main", ...req.body, updatedAt: new Date() } },
+      { upsert: true }
+    );
+    res.json({ ok: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// ── Análisis ──
+app.get("/api/analysis", async (req, res) => {
+  try {
+    const list = await db.collection("analysis").find().sort({ createdAt: -1 }).limit(10).toArray();
+    res.json(list);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post("/api/analysis", async (req, res) => {
+  try {
+    await db.collection("analysis").insertOne({ ...req.body, createdAt: new Date() });
+    res.json({ ok: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// ── Contenido ──
+app.get("/api/content", async (req, res) => {
+  try {
+    const list = await db.collection("content").find().sort({ createdAt: -1 }).limit(10).toArray();
+    res.json(list);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post("/api/content", async (req, res) => {
+  try {
+    await db.collection("content").insertOne({ ...req.body, createdAt: new Date() });
+    res.json({ ok: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// ── Aprendizajes ──
+app.get("/api/wins", async (req, res) => {
+  try {
+    const list = await db.collection("wins").find().sort({ createdAt: -1 }).toArray();
+    res.json(list);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post("/api/wins", async (req, res) => {
+  try {
+    await db.collection("wins").insertOne({ ...req.body, createdAt: new Date() });
+    res.json({ ok: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.delete("/api/wins/:id", async (req, res) => {
+  try {
+    const { ObjectId } = require("mongodb");
+    await db.collection("wins").deleteOne({ _id: new ObjectId(req.params.id) });
+    res.json({ ok: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// ── Claude ──
 app.post("/api/chat", async (req, res) => {
   const { prompt, system } = req.body;
-  if (!prompt || !system) {
-    return res.status(400).json({ error: "Faltan parámetros." });
-  }
+  if (!prompt || !system) return res.status(400).json({ error: "Faltan parámetros." });
   try {
     const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
@@ -23,22 +108,18 @@ app.post("/api/chat", async (req, res) => {
       body: JSON.stringify({
         model: "claude-haiku-4-5-20251001",
         max_tokens: 1500,
-        system: system,
+        system,
         messages: [{ role: "user", content: prompt }],
       }),
     });
     const data = await response.json();
     if (data.error) return res.status(500).json({ error: data.error.message });
-    const text = (data.content || [])
-      .filter((b) => b.type === "text")
-      .map((b) => b.text)
-      .join("\n")
-      .trim();
+    const text = (data.content || []).filter(b => b.type === "text").map(b => b.text).join("\n").trim();
     res.json({ result: text });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+  } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, "0.0.0.0", () => console.log(`✅ Social AI corriendo en http://localhost:${PORT}`));
+connectDB().then(() => {
+  app.listen(PORT, "0.0.0.0", () => console.log(`✅ Social AI corriendo en http://localhost:${PORT}`));
+});
