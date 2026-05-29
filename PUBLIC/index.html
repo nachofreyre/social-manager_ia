@@ -7,84 +7,90 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.10.0/dist/tabler-icons.min.css">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #fff; color: #111; font-size: 14px; line-height: 1.5; }
-  :root {
-    --border: #e5e7eb; --bg2: #f9fafb; --bg3: #f3f4f6;
-    --text2: #6b7280; --text3: #9ca3af;
-    --green: #16a34a; --green-bg: #dcfce7;
-    --yellow: #ca8a04; --yellow-bg: #fef9c3;
-    --red: #dc2626; --red-bg: #fee2e2;
-    --radius: 8px; --radius-sm: 6px;
-  }
-  .wrap { max-width: 780px; margin: 0 auto; padding: 1.5rem 1rem; }
-  .header { display: flex; align-items: center; gap: 12px; margin-bottom: 1.5rem; }
-  .logo { width: 36px; height: 36px; background: var(--bg3); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; color: var(--text2); font-size: 18px; flex-shrink: 0; }
-  .header h1 { font-size: 18px; font-weight: 600; }
-  .header p { font-size: 13px; color: var(--text2); }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9fafb; color: #111; font-size: 14px; line-height: 1.5; }
+  :root { --border: #e5e7eb; --bg: #fff; --bg2: #f9fafb; --bg3: #f3f4f6; --text2: #6b7280; --text3: #9ca3af; --green: #16a34a; --green-bg: #dcfce7; --yellow: #ca8a04; --yellow-bg: #fef9c3; --red: #dc2626; --red-bg: #fee2e2; --blue: #2563eb; --blue-bg: #dbeafe; --radius: 10px; --radius-sm: 6px; }
+  .wrap { max-width: 820px; margin: 0 auto; padding: 1.5rem 1rem; }
+  .header { display: flex; align-items: center; gap: 12px; margin-bottom: 1.5rem; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; }
+  .logo { width: 38px; height: 38px; background: #111; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 18px; flex-shrink: 0; }
+  .header h1 { font-size: 17px; font-weight: 600; }
+  .header p { font-size: 12px; color: var(--text2); }
   .prog-wrap { margin-left: auto; display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-  .prog-bar { width: 70px; height: 5px; background: var(--bg3); border-radius: 3px; overflow: hidden; }
+  .prog-bar { width: 80px; height: 6px; background: var(--bg3); border-radius: 3px; overflow: hidden; }
   .prog-fill { height: 100%; background: var(--green); transition: width .4s; }
-  .tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 1.5rem; overflow-x: auto; }
-  .tab-btn { background: transparent; border: none; border-bottom: 2px solid transparent; padding: 8px 14px; cursor: pointer; font-size: 13px; color: var(--text2); display: flex; align-items: center; gap: 5px; white-space: nowrap; margin-bottom: -1px; }
-  .tab-btn:hover { color: #111; }
-  .tab-btn.active { border-bottom-color: #111; color: #111; font-weight: 500; }
-  .card { border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; }
-  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-bottom: 20px; }
-  .metric { background: var(--bg2); border-radius: var(--radius-sm); padding: 1rem; }
-  .metric-label { font-size: 12px; color: var(--text2); display: flex; align-items: center; gap: 5px; margin-bottom: 4px; }
-  .metric-val { font-size: 22px; font-weight: 600; }
+  .tabs { display: flex; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1.5rem; overflow-x: auto; padding: 4px; gap: 2px; }
+  .tab-btn { background: transparent; border: none; border-radius: var(--radius-sm); padding: 7px 14px; cursor: pointer; font-size: 13px; color: var(--text2); display: flex; align-items: center; gap: 5px; white-space: nowrap; transition: all .15s; }
+  .tab-btn:hover { background: var(--bg3); color: #111; }
+  .tab-btn.active { background: #111; color: #fff; font-weight: 500; }
+  .card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .metric { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; }
+  .metric-label { font-size: 12px; color: var(--text2); display: flex; align-items: center; gap: 5px; margin-bottom: 6px; }
+  .metric-val { font-size: 24px; font-weight: 700; }
   .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .action-card { border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; cursor: pointer; }
-  .action-card:hover { background: var(--bg2); }
+  .action-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; cursor: pointer; transition: all .15s; }
+  .action-card:hover { border-color: #111; }
   .action-card-head { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-weight: 600; font-size: 14px; }
   .action-card-desc { font-size: 13px; color: var(--text2); }
   label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 4px; }
-  input, select { width: 100%; padding: 7px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 13px; font-family: inherit; outline: none; background: #fff; color: #111; }
+  input, select { width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 13px; font-family: inherit; outline: none; background: var(--bg); color: #111; }
   input:focus, select:focus { border-color: #111; }
   .field { margin-bottom: 12px; }
   .row { display: flex; gap: 8px; }
   .row input { flex: 1; width: auto; }
-  button { padding: 7px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: #fff; font-size: 13px; cursor: pointer; font-family: inherit; color: #111; }
-  button:hover:not(:disabled) { background: var(--bg2); }
+  button { padding: 8px 16px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); font-size: 13px; cursor: pointer; font-family: inherit; color: #111; transition: all .15s; }
+  button:hover:not(:disabled) { background: var(--bg3); }
   button:disabled { opacity: .5; cursor: not-allowed; }
   button.primary { background: #111; color: #fff; border-color: #111; }
   button.primary:hover:not(:disabled) { background: #333; }
   button.small { padding: 4px 8px; font-size: 12px; }
+  .ideas-grid { display: flex; flex-direction: column; gap: 16px; margin-top: 16px; }
+  .idea-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .idea-header { background: #111; color: #fff; padding: .75rem 1rem; display: flex; align-items: center; gap: 10px; }
+  .idea-num { width: 26px; height: 26px; background: rgba(255,255,255,.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+  .idea-title { font-weight: 600; font-size: 15px; }
+  .idea-body { padding: 1rem; display: flex; flex-direction: column; gap: 14px; }
+  .idea-section-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; color: var(--text3); display: flex; align-items: center; gap: 5px; margin-bottom: 5px; }
+  .idea-section-content { font-size: 13px; line-height: 1.6; }
+  .copy-box { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: .75rem; font-size: 13px; line-height: 1.6; position: relative; padding-right: 80px; }
+  .copy-btn { position: absolute; top: 8px; right: 8px; padding: 3px 10px; font-size: 11px; }
+  .hashtags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .hashtag { background: var(--blue-bg); color: var(--blue); border-radius: 20px; padding: 3px 10px; font-size: 12px; font-weight: 500; }
+  .why-box { background: var(--green-bg); border-radius: var(--radius-sm); padding: .6rem .75rem; font-size: 13px; color: var(--green); display: flex; gap: 8px; align-items: flex-start; }
+  .idea-footer { display: flex; gap: 6px; flex-wrap: wrap; padding: .75rem 1rem; border-top: 1px solid var(--border); background: var(--bg2); }
+  .tag { border-radius: 20px; padding: 3px 10px; font-size: 12px; font-weight: 500; background: var(--bg3); color: var(--text2); }
   .result-box { font-size: 13px; line-height: 1.75; white-space: pre-wrap; max-height: 460px; overflow-y: auto; }
   .result-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; gap: 8px; }
   .result-title { font-weight: 600; font-size: 14px; }
   .result-date { font-size: 12px; color: var(--text2); flex-shrink: 0; }
-  .tags { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; }
-  .tag { background: var(--bg3); border-radius: var(--radius-sm); padding: 3px 10px; font-size: 12px; font-weight: 500; }
-  .tag-green { font-size: 12px; color: var(--green); }
-  .loading { text-align: center; padding: 2rem; border: 1px solid var(--border); border-radius: var(--radius); margin-top: 12px; color: var(--text2); }
+  .loading { text-align: center; padding: 2.5rem; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); margin-top: 12px; color: var(--text2); }
+  .loading i { font-size: 32px; display: block; margin-bottom: 10px; }
   .error { background: var(--red-bg); border: 1px solid #fca5a5; border-radius: var(--radius-sm); padding: .75rem 1rem; font-size: 13px; color: var(--red); margin-top: 12px; }
-  .success-text { font-size: 13px; color: var(--green); margin-top: 8px; }
-  .empty-state { text-align: center; padding: 2.5rem; color: var(--text2); }
-  .empty-state i { font-size: 36px; display: block; margin-bottom: 8px; }
-  .log-item { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 6px; cursor: pointer; font-size: 13px; }
-  .log-item:hover { background: var(--bg2); }
+  .success-text { font-size: 13px; color: var(--green); margin-top: 8px; display: flex; align-items: center; gap: 5px; }
+  .empty-state { text-align: center; padding: 3rem; color: var(--text2); background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); }
+  .empty-state i { font-size: 40px; display: block; margin-bottom: 10px; opacity: .4; }
+  .log-item { display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 6px; cursor: pointer; font-size: 13px; }
+  .log-item:hover { border-color: #111; }
   .log-item-text { flex: 1; }
   .log-item-date { color: var(--text2); font-size: 12px; flex-shrink: 0; }
   .phase { display: flex; gap: 12px; align-items: flex-start; }
-  .phase-circle { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: var(--bg3); font-size: 16px; }
-  .phase-circle.done { background: var(--green-bg); color: var(--green); font-weight: 700; }
-  .phase-circle.partial { background: var(--yellow-bg); }
+  .phase-circle { width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: var(--bg3); font-size: 16px; border: 2px solid var(--border); }
+  .phase-circle.done { background: var(--green-bg); color: var(--green); border-color: var(--green); font-weight: 700; }
+  .phase-circle.partial { background: var(--yellow-bg); border-color: var(--yellow); }
   .phase-info { flex: 1; }
   .phase-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
   .phase-lbl { font-size: 11px; color: var(--text2); font-weight: 600; }
-  .badge { font-size: 11px; font-weight: 600; }
-  .badge.done { color: var(--green); }
-  .badge.partial { color: var(--yellow); }
-  .badge.soon, .badge.pending { color: var(--text3); }
+  .badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
+  .badge.done { color: var(--green); background: var(--green-bg); }
+  .badge.partial { color: var(--yellow); background: var(--yellow-bg); }
+  .badge.soon, .badge.pending { color: var(--text3); background: var(--bg3); }
   .phase-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
   .phase-desc { font-size: 13px; color: var(--text2); line-height: 1.5; margin-bottom: 6px; }
   .phase-note { font-size: 12px; color: var(--text3); margin-bottom: 8px; }
-  .section-title { font-size: 13px; font-weight: 600; margin-bottom: 8px; }
-  .win-card { border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; display: flex; gap: 12px; margin-bottom: 8px; }
+  .section-title { font-size: 11px; font-weight: 600; margin-bottom: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: .5px; }
+  .win-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; display: flex; gap: 12px; margin-bottom: 8px; }
   .win-info { flex: 1; }
-  .win-desc { font-size: 14px; margin-bottom: 4px; }
-  .win-metric { font-size: 13px; color: var(--green); margin-bottom: 4px; }
+  .win-desc { font-size: 14px; margin-bottom: 4px; font-weight: 500; }
+  .win-metric { font-size: 13px; color: var(--green); margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
   .win-date { font-size: 12px; color: var(--text3); }
   .tab-content { display: none; }
   .tab-content.active { display: block; }
@@ -93,7 +99,6 @@
 </head>
 <body>
 <div class="wrap">
-
   <div class="header">
     <div class="logo"><i class="ti ti-social"></i></div>
     <div>
@@ -105,7 +110,6 @@
       <span id="progText" style="font-size:12px;color:var(--text2)"></span>
     </div>
   </div>
-
   <div class="tabs">
     <button class="tab-btn active" onclick="showTab('perfil',this)"><i class="ti ti-building-store"></i> Perfil</button>
     <button class="tab-btn" onclick="showTab('dashboard',this)"><i class="ti ti-layout-dashboard"></i> Dashboard</button>
@@ -114,29 +118,23 @@
     <button class="tab-btn" onclick="showTab('aprendizajes',this)"><i class="ti ti-star"></i> Aprendizajes</button>
     <button class="tab-btn" onclick="showTab('roadmap',this)"><i class="ti ti-map-2"></i> Roadmap</button>
   </div>
-
-  <!-- PERFIL -->
   <div id="tab-perfil" class="tab-content active">
-    <p style="color:var(--text2);margin-bottom:1.25rem">Configurá el perfil de tu negocio para que la IA personalice todos los análisis y contenidos.</p>
-    <div style="max-width:520px">
-      <div class="field"><label>Nombre del negocio</label><input id="p_name" placeholder="Ej: Café El Molino"></div>
-      <div class="field"><label>Industria / Rubro</label><input id="p_industry" placeholder="Ej: Gastronomía, moda, tecnología..."></div>
-      <div class="field"><label>Público objetivo</label><input id="p_audience" placeholder="Ej: Mujeres 25-40 años, profesionales urbanos"></div>
-      <div class="field"><label>Competidores principales</label><input id="p_competitors" placeholder="Ej: @marca1, @marca2, NombreMarca"></div>
-      <div class="field"><label>Voz de marca</label><input id="p_voice" placeholder="Ej: Cercana, divertida y profesional"></div>
-      <div class="field"><label>Objetivos de negocio</label><input id="p_goals" placeholder="Ej: Aumentar ventas 30%, crecer en seguidores"></div>
-      <button class="primary" onclick="saveProfile()">Guardar y continuar ↗</button>
-      <p id="profileMsg" style="display:none" class="success-text">✓ Perfil guardado correctamente</p>
+    <div class="card">
+      <p style="color:var(--text2);margin-bottom:1.25rem;font-size:13px">Configurá el perfil de tu negocio. Se guarda automáticamente en la base de datos.</p>
+      <div style="max-width:520px">
+        <div class="field"><label>Nombre del negocio</label><input id="p_name" placeholder="Ej: Café El Molino"></div>
+        <div class="field"><label>Industria / Rubro</label><input id="p_industry" placeholder="Ej: Gastronomía, moda, tecnología..."></div>
+        <div class="field"><label>Público objetivo</label><input id="p_audience" placeholder="Ej: Mujeres 25-40 años, profesionales urbanos"></div>
+        <div class="field"><label>Competidores principales</label><input id="p_competitors" placeholder="Ej: @marca1, @marca2"></div>
+        <div class="field"><label>Voz de marca</label><input id="p_voice" placeholder="Ej: Cercana, divertida y profesional"></div>
+        <div class="field"><label>Objetivos de negocio</label><input id="p_goals" placeholder="Ej: Aumentar ventas 30%, crecer en seguidores"></div>
+        <button class="primary" onclick="saveProfile()">Guardar perfil ↗</button>
+        <p id="profileMsg" style="display:none" class="success-text"><i class="ti ti-check"></i> Perfil guardado correctamente</p>
+      </div>
     </div>
   </div>
-
-  <!-- DASHBOARD -->
   <div id="tab-dashboard" class="tab-content">
-    <div id="dashNotSaved" class="empty-state">
-      <i class="ti ti-building-store"></i>
-      <p style="margin-bottom:12px">Completá el perfil de tu negocio para empezar.</p>
-      <button onclick="goTab('perfil')">Configurar perfil ↗</button>
-    </div>
+    <div id="dashNotSaved" class="empty-state"><i class="ti ti-building-store"></i><p style="margin-bottom:12px">Completá el perfil para empezar.</p><button onclick="goTab('perfil')">Configurar perfil ↗</button></div>
     <div id="dashContent" style="display:none">
       <div class="card-grid" id="metricsGrid"></div>
       <div class="action-grid">
@@ -147,178 +145,115 @@
       </div>
     </div>
   </div>
-
-  <!-- ANÁLISIS -->
   <div id="tab-analisis" class="tab-content">
-    <p style="color:var(--text2);margin-bottom:1rem">Ingresá un tema, producto, competidor o tendencia y la IA lo analizará con datos de mercado.</p>
-    <div class="row" style="margin-bottom:16px">
-      <input id="analysisTopic" placeholder="Ej: tendencias en ropa deportiva, competidor X..." onkeydown="if(event.key==='Enter')runAnalysis()">
-      <button id="analyzeBtn" class="primary" onclick="runAnalysis()">Analizar ↗</button>
+    <div class="card" style="margin-bottom:16px">
+      <p style="color:var(--text2);margin-bottom:1rem;font-size:13px">Ingresá un tema, competidor o tendencia y Claude lo analizará.</p>
+      <div class="row"><input id="analysisTopic" placeholder="Ej: tendencias en ropa deportiva, competidor X..." onkeydown="if(event.key==='Enter')runAnalysis()"><button id="analyzeBtn" class="primary" onclick="runAnalysis()">Analizar ↗</button></div>
     </div>
-    <div id="analysisLoading" class="loading" style="display:none"><i class="ti ti-loader" style="font-size:28px;display:block;margin-bottom:8px"></i>Analizando el mercado con Claude...</div>
+    <div id="analysisLoading" class="loading" style="display:none"><i class="ti ti-loader"></i>Analizando con Claude...</div>
     <div id="analysisError" class="error" style="display:none"></div>
-    <div id="analysisResult" class="card" style="display:none;margin-bottom:16px">
-      <div class="result-head"><span class="result-title" id="aResultTopic"></span><span class="result-date" id="aResultDate"></span></div>
-      <div class="result-box" id="aResultText"></div>
-    </div>
+    <div id="analysisResult" class="card" style="display:none;margin-bottom:16px"><div class="result-head"><span class="result-title" id="aResultTopic"></span><span class="result-date" id="aResultDate"></span></div><div class="result-box" id="aResultText"></div></div>
     <div id="analysisEmpty" class="empty-state"><i class="ti ti-chart-line"></i><p>Escribí un tema arriba para hacer tu primer análisis.</p></div>
     <div id="analysisLog" style="display:none"><div class="section-title" style="margin-top:4px">Análisis anteriores</div><div id="analysisLogList"></div></div>
   </div>
-
-  <!-- CONTENIDO -->
   <div id="tab-contenido" class="tab-content">
-    <p style="color:var(--text2);margin-bottom:1rem">La IA genera ideas usando tu perfil, análisis de mercado y aprendizajes previos.</p>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
-      <div><label>Tipo de contenido</label><select id="cType"><option>Reels</option><option>Carrusel</option><option>Post estático</option><option>Stories</option><option>Live</option></select></div>
-      <div><label>Objetivo</label><select id="cGoal"><option value="ventas">Ventas</option><option value="engagement">Engagement</option><option value="awareness">Awareness</option><option value="fidelización">Fidelización</option><option value="educación">Educar a la audiencia</option></select></div>
-    </div>
-    <div class="field"><label>Contexto adicional (opcional)</label><input id="cExtra" placeholder="Ej: nueva colección de verano, promoción especial..."></div>
-    <button id="contentBtn" class="primary" onclick="runContent()">Generar 5 ideas de contenido ↗</button>
-    <div id="contentLoading" class="loading" style="display:none"><i class="ti ti-loader" style="font-size:28px;display:block;margin-bottom:8px"></i>Creando ideas personalizadas con Claude...</div>
-    <div id="contentError" class="error" style="display:none"></div>
-    <div id="contentResult" class="card" style="display:none;margin-top:16px"><div class="tags" id="cResultTags"></div><div class="result-box" id="cResultText"></div></div>
-    <div id="contentLog" style="display:none;margin-top:16px"><div class="section-title">Sesiones anteriores</div><div id="contentLogList"></div></div>
-  </div>
-
-  <!-- APRENDIZAJES -->
-  <div id="tab-aprendizajes" class="tab-content">
-    <p style="color:var(--text2);margin-bottom:1rem">Registrá qué funciona en tus redes. La IA usa estos datos para mejorar todas las generaciones futuras.</p>
     <div class="card" style="margin-bottom:16px">
-      <div class="section-title">Nuevo aprendizaje</div>
-      <div class="field" style="margin-top:10px"><label>¿Qué funcionó?</label><input id="wDesc" placeholder="Ej: Los Reels de detrás de escena tuvieron más alcance que los posts estáticos"></div>
-      <div class="field"><label>Métrica obtenida (opcional)</label><input id="wMetric" placeholder="Ej: +320% alcance, 4.5% engagement, 80 comentarios"></div>
+      <p style="color:var(--text2);margin-bottom:1rem;font-size:13px">La IA genera 5 ideas en tarjetas visuales listas para usar, con copy y hashtags.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+        <div><label>Tipo de contenido</label><select id="cType"><option>Reels</option><option>Carrusel</option><option>Post estático</option><option>Stories</option><option>Live</option></select></div>
+        <div><label>Objetivo</label><select id="cGoal"><option value="ventas">Ventas</option><option value="engagement">Engagement</option><option value="awareness">Awareness</option><option value="fidelización">Fidelización</option><option value="educación">Educar a la audiencia</option></select></div>
+      </div>
+      <div class="field"><label>Contexto adicional (opcional)</label><input id="cExtra" placeholder="Ej: nueva colección de verano, promoción especial..."></div>
+      <button id="contentBtn" class="primary" onclick="runContent()">Generar 5 ideas de contenido ↗</button>
+    </div>
+    <div id="contentLoading" class="loading" style="display:none"><i class="ti ti-loader"></i>Creando ideas personalizadas con Claude...</div>
+    <div id="contentError" class="error" style="display:none"></div>
+    <div id="ideasGrid" class="ideas-grid" style="display:none"></div>
+    <div id="contentEmpty" class="empty-state"><i class="ti ti-bulb"></i><p>Configurá el tipo y objetivo y generá tus primeras ideas.</p></div>
+    <div id="contentLog" style="display:none;margin-top:20px"><div class="section-title">Sesiones anteriores</div><div id="contentLogList"></div></div>
+  </div>
+  <div id="tab-aprendizajes" class="tab-content">
+    <div class="card" style="margin-bottom:16px">
+      <p style="color:var(--text2);margin-bottom:1rem;font-size:13px">Registrá qué funciona. La IA usa estos datos para mejorar todas las generaciones futuras.</p>
+      <div class="field"><label>¿Qué funcionó?</label><input id="wDesc" placeholder="Ej: Los Reels de detrás de escena tuvieron más alcance que los posts estáticos"></div>
+      <div class="field"><label>Métrica obtenida (opcional)</label><input id="wMetric" placeholder="Ej: +320% alcance, 4.5% engagement"></div>
       <button class="primary" onclick="addWin()">Registrar aprendizaje ↗</button>
     </div>
-    <div id="winsEmpty" class="empty-state"><i class="ti ti-star"></i><p>Sin aprendizajes todavía. Agregá el primero arriba.</p></div>
+    <div id="winsEmpty" class="empty-state"><i class="ti ti-star"></i><p>Sin aprendizajes todavía.</p></div>
     <div id="winsList"></div>
   </div>
-
-  <!-- ROADMAP -->
   <div id="tab-roadmap" class="tab-content">
-    <p style="color:var(--text2);margin-bottom:1rem">El camino hacia la automatización completa de tus redes sociales.</p>
-    <div style="margin-bottom:20px">
-      <div style="display:flex;justify-content:space-between;margin-bottom:6px">
-        <span style="font-size:13px;font-weight:600">Progreso del sistema</span>
-        <span id="rmPct" style="font-size:13px;color:var(--text2)"></span>
-      </div>
-      <div style="height:5px;background:var(--bg3);border-radius:3px;overflow:hidden"><div id="rmFill" style="height:100%;background:var(--green);transition:width .4s"></div></div>
+    <div class="card" style="margin-bottom:16px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><span style="font-weight:600">Progreso del sistema</span><span id="rmPct" style="font-size:13px;color:var(--text2)"></span></div>
+      <div style="height:8px;background:var(--bg3);border-radius:4px;overflow:hidden"><div id="rmFill" style="height:100%;background:var(--green);transition:width .4s"></div></div>
     </div>
     <div id="roadmapPhases"></div>
   </div>
-
 </div>
 <script>
-let profileSaved=false,profile={name:"",industry:"",audience:"",competitors:"",voice:"",goals:""},analysisLog=[],contentLog=[],wins=[];
-
-async function callAI(prompt,system){
-  const res=await fetch("/api/chat",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({prompt,system})
+let profileSaved=false,profile={},analysisLog=[],contentLog=[],wins=[];
+async function api(path,method="GET",body=null){const opts={method,headers:{"Content-Type":"application/json"}};if(body)opts.body=JSON.stringify(body);const res=await fetch(path,opts);return res.json();}
+async function callAI(prompt,system){const d=await api("/api/chat","POST",{prompt,system});if(d.error)throw new Error(d.error);if(!d.result)throw new Error("Sin respuesta. Intentá de nuevo.");return d.result;}
+function parseIdeas(text){
+  const ideas=[];
+  const blocks=text.split(/(?=📌)/g).filter(b=>b.trim().length>30);
+  blocks.forEach((block,idx)=>{
+    const titleMatch=block.match(/📌\s*(.+?)(?:\n)/);
+    const conceptMatch=block.match(/💡[^:]*:?\s*([\s\S]+?)(?=✍️|#️⃣|🎯|$)/i);
+    const copyMatch=block.match(/✍️[^:]*:?\s*([\s\S]+?)(?=#️⃣|🎯|$)/i);
+    const hashMatch=block.match(/#️⃣\s*([\s\S]+?)(?=🎯|$)/i);
+    const whyMatch=block.match(/🎯\s*([\s\S]+?)$/i);
+    if(titleMatch){ideas.push({
+      num:idx+1,
+      title:titleMatch[1].trim(),
+      concept:conceptMatch?conceptMatch[1].trim():"",
+      copy:copyMatch?copyMatch[1].trim():"",
+      hashtags:hashMatch?hashMatch[1].trim().split(/\s+/).filter(h=>h.length>1).map(h=>h.startsWith("#")?h:"#"+h):[],
+      why:whyMatch?whyMatch[1].trim():""
+    });}
   });
-  if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e?.error||`Error ${res.status}`);}
-  const d=await res.json();
-  if(d.error)throw new Error(d.error);
-  if(!d.result)throw new Error("Sin respuesta. Intentá de nuevo.");
-  return d.result;
+  return ideas.length>=2?ideas:null;
 }
-
+function renderIdeas(ideas,meta){
+  const grid=document.getElementById("ideasGrid");
+  grid.style.display="flex";
+  document.getElementById("contentEmpty").style.display="none";
+  grid.innerHTML=ideas.map(idea=>`
+    <div class="idea-card">
+      <div class="idea-header"><div class="idea-num">${idea.num}</div><div class="idea-title">${idea.title}</div></div>
+      <div class="idea-body">
+        ${idea.concept?`<div><div class="idea-section-label"><i class="ti ti-lightbulb"></i> Concepto</div><div class="idea-section-content">${idea.concept}</div></div>`:""}
+        ${idea.copy?`<div><div class="idea-section-label"><i class="ti ti-pencil"></i> Copy para el caption</div><div class="copy-box" id="cb${idea.num}">${idea.copy}<button class="small copy-btn" onclick="copiar('cb${idea.num}',this)">Copiar</button></div></div>`:""}
+        ${idea.hashtags.length>0?`<div><div class="idea-section-label"><i class="ti ti-hash"></i> Hashtags</div><div class="hashtags">${idea.hashtags.map(h=>`<span class="hashtag">${h}</span>`).join("")}</div></div>`:""}
+        ${idea.why?`<div class="why-box"><i class="ti ti-target" style="flex-shrink:0"></i> ${idea.why}</div>`:""}
+      </div>
+      <div class="idea-footer"><span class="tag">${meta.type}</span><span class="tag">${meta.goal}</span></div>
+    </div>`).join("");
+}
+function copiar(id,btn){const el=document.getElementById(id);const text=el.innerText.replace("Copiar","").trim();navigator.clipboard.writeText(text).then(()=>{btn.textContent="✓ Copiado";setTimeout(()=>btn.textContent="Copiar",2000);});}
 function getCtx(){if(!profileSaved)return "";return `Negocio: "${profile.name}" (${profile.industry}). Audiencia: ${profile.audience}. Competidores: ${profile.competitors}. Voz: ${profile.voice||"profesional"}. Objetivos: ${profile.goals||"aumentar ventas"}.`;}
 function getProgress(){return Math.min((profileSaved?20:0)+(analysisLog.length>=1?15:0)+(analysisLog.length>=3?10:0)+(contentLog.length>=1?15:0)+(wins.length>=1?10:0)+(wins.length>=5?10:0),80);}
 function updateProgress(){const p=getProgress();document.getElementById("progFill").style.width=p+"%";document.getElementById("progText").textContent=p+"% activo";if(profileSaved)document.getElementById("progWrap").style.display="flex";}
 function showTab(id,btn){document.querySelectorAll(".tab-content").forEach(t=>t.classList.remove("active"));document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));document.getElementById("tab-"+id).classList.add("active");if(btn)btn.classList.add("active");if(id==="dashboard")updateDashboard();if(id==="roadmap")updateRoadmap();}
 function goTab(id){const tabs=["perfil","dashboard","analisis","contenido","aprendizajes","roadmap"];const btns=document.querySelectorAll(".tab-btn");const i=tabs.indexOf(id);if(i>=0)showTab(id,btns[i]);}
-
-function saveProfile(){
-  profile.name=document.getElementById("p_name").value.trim();
-  profile.industry=document.getElementById("p_industry").value.trim();
-  profile.audience=document.getElementById("p_audience").value.trim();
-  profile.competitors=document.getElementById("p_competitors").value.trim();
-  profile.voice=document.getElementById("p_voice").value.trim();
-  profile.goals=document.getElementById("p_goals").value.trim();
-  if(!profile.name||!profile.industry){alert("Completá al menos el nombre y el rubro.");return;}
-  profileSaved=true;
-  document.getElementById("profileMsg").style.display="block";
-  document.getElementById("headerTitle").textContent=profile.name+" — Redes IA";
-  updateProgress();setTimeout(()=>goTab("dashboard"),600);
-}
-
-function updateDashboard(){
-  if(!profileSaved){document.getElementById("dashNotSaved").style.display="block";document.getElementById("dashContent").style.display="none";return;}
-  document.getElementById("dashNotSaved").style.display="none";document.getElementById("dashContent").style.display="block";
-  const p=getProgress();
-  document.getElementById("metricsGrid").innerHTML=[{l:"Análisis",v:analysisLog.length,i:"chart-line"},{l:"Ideas generadas",v:contentLog.length*5,i:"bulb"},{l:"Aprendizajes",v:wins.length,i:"star"},{l:"Activación IA",v:p+"%",i:"robot"}].map(c=>`<div class="metric"><div class="metric-label"><i class="ti ti-${c.i}"></i> ${c.l}</div><div class="metric-val">${c.v}</div></div>`).join("");
-  document.getElementById("d_analisis").textContent=analysisLog[0]?`Último: ${analysisLog[0].topic}`:"Sin análisis aún";
-  document.getElementById("d_contenido").textContent=`${contentLog.length} sesiones realizadas`;
-  document.getElementById("d_aprendizajes").textContent=`${wins.length} registrados`;
-}
-
-async function runAnalysis(){
-  const topic=document.getElementById("analysisTopic").value.trim();if(!topic)return;
-  const btn=document.getElementById("analyzeBtn");btn.disabled=true;btn.textContent="Analizando...";
-  document.getElementById("analysisLoading").style.display="block";
-  document.getElementById("analysisError").style.display="none";
-  document.getElementById("analysisResult").style.display="none";
-  document.getElementById("analysisEmpty").style.display="none";
-  try{
-    const result=await callAI(`Análisis de mercado para: "${topic}"\n\n1. 📈 Tendencias actuales del sector\n2. 🏆 Qué está haciendo la competencia\n3. 💡 Oportunidades concretas para el negocio\n4. ⚠️ Amenazas a considerar\n5. 🎯 Recomendaciones específicas para Instagram y redes sociales`,`Eres estratega de marketing digital experto. ${getCtx()} Respondé en español. Sé específico y práctico.`);
-    const entry={topic,result,date:new Date().toLocaleDateString("es-AR")};
-    analysisLog.unshift(entry);if(analysisLog.length>10)analysisLog.pop();
-    document.getElementById("analysisTopic").value="";
-    showAnalysisResult(entry);refreshAnalysisLog();updateProgress();
-  }catch(e){document.getElementById("analysisError").textContent=e.message;document.getElementById("analysisError").style.display="block";document.getElementById("analysisEmpty").style.display="block";}
-  finally{document.getElementById("analysisLoading").style.display="none";btn.disabled=false;btn.textContent="Analizar ↗";}
-}
-
+async function loadProfile(){const data=await api("/api/profile");if(data&&data.name){profile=data;profileSaved=true;["name","industry","audience","competitors","voice","goals"].forEach(k=>{const el=document.getElementById("p_"+k);if(el)el.value=data[k]||"";});document.getElementById("headerTitle").textContent=profile.name+" — Redes IA";updateProgress();}}
+async function saveProfile(){profile.name=document.getElementById("p_name").value.trim();profile.industry=document.getElementById("p_industry").value.trim();profile.audience=document.getElementById("p_audience").value.trim();profile.competitors=document.getElementById("p_competitors").value.trim();profile.voice=document.getElementById("p_voice").value.trim();profile.goals=document.getElementById("p_goals").value.trim();if(!profile.name||!profile.industry){alert("Completá al menos el nombre y el rubro.");return;}await api("/api/profile","POST",profile);profileSaved=true;document.getElementById("profileMsg").style.display="flex";document.getElementById("headerTitle").textContent=profile.name+" — Redes IA";updateProgress();setTimeout(()=>goTab("dashboard"),800);}
+function updateDashboard(){if(!profileSaved){document.getElementById("dashNotSaved").style.display="block";document.getElementById("dashContent").style.display="none";return;}document.getElementById("dashNotSaved").style.display="none";document.getElementById("dashContent").style.display="block";const p=getProgress();document.getElementById("metricsGrid").innerHTML=[{l:"Análisis",v:analysisLog.length,i:"chart-line"},{l:"Ideas generadas",v:contentLog.length*5,i:"bulb"},{l:"Aprendizajes",v:wins.length,i:"star"},{l:"Activación IA",v:p+"%",i:"robot"}].map(c=>`<div class="metric"><div class="metric-label"><i class="ti ti-${c.i}"></i> ${c.l}</div><div class="metric-val">${c.v}</div></div>`).join("");document.getElementById("d_analisis").textContent=analysisLog[0]?`Último: ${analysisLog[0].topic}`:"Sin análisis aún";document.getElementById("d_contenido").textContent=`${contentLog.length} sesiones realizadas`;document.getElementById("d_aprendizajes").textContent=`${wins.length} registrados`;}
+async function loadAnalysis(){analysisLog=await api("/api/analysis");if(analysisLog.length>0){showAnalysisResult(analysisLog[0]);refreshAnalysisLog();}}
+async function runAnalysis(){const topic=document.getElementById("analysisTopic").value.trim();if(!topic)return;const btn=document.getElementById("analyzeBtn");btn.disabled=true;btn.textContent="Analizando...";document.getElementById("analysisLoading").style.display="block";document.getElementById("analysisError").style.display="none";document.getElementById("analysisResult").style.display="none";document.getElementById("analysisEmpty").style.display="none";try{const result=await callAI(`Análisis de mercado para: "${topic}"\n\n1. 📈 Tendencias actuales del sector\n2. 🏆 Qué está haciendo la competencia\n3. 💡 Oportunidades concretas para el negocio\n4. ⚠️ Amenazas a considerar\n5. 🎯 Recomendaciones específicas para Instagram`,`Eres estratega de marketing digital experto. ${getCtx()} Respondé en español. Sé específico y práctico.`);const entry={topic,result,date:new Date().toLocaleDateString("es-AR")};await api("/api/analysis","POST",entry);analysisLog.unshift(entry);document.getElementById("analysisTopic").value="";showAnalysisResult(entry);refreshAnalysisLog();updateProgress();}catch(e){document.getElementById("analysisError").textContent=e.message;document.getElementById("analysisError").style.display="block";document.getElementById("analysisEmpty").style.display="block";}finally{document.getElementById("analysisLoading").style.display="none";btn.disabled=false;btn.textContent="Analizar ↗";}}
 function showAnalysisResult(entry){document.getElementById("aResultTopic").textContent=entry.topic;document.getElementById("aResultDate").textContent=entry.date;document.getElementById("aResultText").textContent=entry.result;document.getElementById("analysisResult").style.display="block";document.getElementById("analysisEmpty").style.display="none";}
 function refreshAnalysisLog(){const log=analysisLog.slice(1);if(log.length===0){document.getElementById("analysisLog").style.display="none";return;}document.getElementById("analysisLog").style.display="block";document.getElementById("analysisLogList").innerHTML=log.map((a,i)=>`<div class="log-item" onclick="showAnalysisResult(analysisLog[${i+1}])"><i class="ti ti-history"></i><span class="log-item-text">${a.topic}</span><span class="log-item-date">${a.date}</span></div>`).join("");}
-
-async function runContent(){
-  const btn=document.getElementById("contentBtn");btn.disabled=true;btn.textContent="Generando ideas...";
-  document.getElementById("contentLoading").style.display="block";
-  document.getElementById("contentError").style.display="none";
-  document.getElementById("contentResult").style.display="none";
-  const cType=document.getElementById("cType").value;
-  const cGoal=document.getElementById("cGoal").value;
-  const cExtra=document.getElementById("cExtra").value.trim();
-  try{
-    const wCtx=wins.length>0?`Aprendizajes previos: ${wins.map(w=>w.desc).join("; ")}.`:"";
-    const aCtx=analysisLog[0]?`Contexto de mercado: "${analysisLog[0].topic}".`:"";
-    const result=await callAI(`Generá 5 ideas de contenido para ${cType} en Instagram, objetivo: ${cGoal}${cExtra?`, contexto: ${cExtra}`:""}.\n\nPara cada idea:\n📌 Título atractivo\n💡 Concepto (2-3 líneas)\n✍️ Copy para el caption\n#️⃣ 6-8 hashtags\n🎯 Por qué va a funcionar`,`Eres experto en contenido de Instagram. ${getCtx()} ${wCtx} ${aCtx} Respondé en español con ideas originales y creativas.`);
-    const entry={type:cType,goal:cGoal,result,date:new Date().toLocaleDateString("es-AR")};
-    contentLog.unshift(entry);if(contentLog.length>10)contentLog.pop();
-    document.getElementById("cExtra").value="";
-    showContentResult(entry);refreshContentLog();updateProgress();
-  }catch(e){document.getElementById("contentError").textContent=e.message;document.getElementById("contentError").style.display="block";}
-  finally{document.getElementById("contentLoading").style.display="none";btn.disabled=false;btn.textContent="Generar 5 ideas de contenido ↗";}
-}
-
-function showContentResult(entry){const t=document.getElementById("cResultTags");t.innerHTML=`<span class="tag">${entry.type}</span><span class="tag">${entry.goal}</span>`;if(wins.length>0)t.innerHTML+=`<span class="tag-green">✓ Con aprendizajes</span>`;if(analysisLog.length>0)t.innerHTML+=`<span class="tag-green">✓ Con análisis</span>`;t.innerHTML+=`<span style="margin-left:auto;font-size:12px;color:var(--text2)">${entry.date}</span>`;document.getElementById("cResultText").textContent=entry.result;document.getElementById("contentResult").style.display="block";}
-function refreshContentLog(){const log=contentLog.slice(1);if(log.length===0){document.getElementById("contentLog").style.display="none";return;}document.getElementById("contentLog").style.display="block";document.getElementById("contentLogList").innerHTML=log.slice(0,4).map((c,i)=>`<div class="log-item" onclick="showContentResult(contentLog[${i+1}])"><i class="ti ti-bulb"></i><span class="log-item-text">${c.type} — ${c.goal}</span><span class="log-item-date">${c.date}</span></div>`).join("");}
-
-function addWin(){const desc=document.getElementById("wDesc").value.trim();if(!desc)return;const metric=document.getElementById("wMetric").value.trim();wins.unshift({desc,metric,date:new Date().toLocaleDateString("es-AR"),id:Date.now()});document.getElementById("wDesc").value="";document.getElementById("wMetric").value="";refreshWins();updateProgress();}
-function removeWin(id){wins=wins.filter(w=>w.id!==id);refreshWins();updateProgress();}
-function refreshWins(){document.getElementById("winsEmpty").style.display=wins.length===0?"block":"none";document.getElementById("winsList").innerHTML=wins.map(w=>`<div class="win-card"><div class="win-info"><div class="win-desc">${w.desc}</div>${w.metric?`<div class="win-metric">${w.metric}</div>`:""}<div class="win-date">${w.date}</div></div><button class="small" onclick="removeWin(${w.id})"><i class="ti ti-trash"></i></button></div>`).join("");}
-
-function updateRoadmap(){
-  const p=getProgress();document.getElementById("rmPct").textContent=p+"% activo";document.getElementById("rmFill").style.width=p+"%";
-  const steps=[
-    {ph:"Fase 1",t:"Configuración del perfil",d:"Definir identidad, audiencia y objetivos.",done:profileSaved,ico:"building-store",at:"perfil",al:"Completar perfil ↗"},
-    {ph:"Fase 2",t:"Análisis continuo de mercado",d:"Monitorear tendencias y competencia con IA.",done:analysisLog.length>=3,partial:analysisLog.length>0,ico:"chart-line",at:"analisis",al:"Ir a análisis ↗",note:`${analysisLog.length} análisis (recomendado: 3+)`},
-    {ph:"Fase 3",t:"Generación de contenido con IA",d:"Ideas personalizadas con contexto de mercado.",done:contentLog.length>=5,partial:contentLog.length>0,ico:"bulb",at:"contenido",al:"Generar contenido ↗",note:`${contentLog.length} sesiones`},
-    {ph:"Fase 4",t:"Retroalimentación y aprendizaje",d:"La IA mejora sus recomendaciones con el tiempo.",done:wins.length>=5,partial:wins.length>0,ico:"star",at:"aprendizajes",al:"Agregar aprendizajes ↗",note:`${wins.length} aprendizajes registrados`},
-    {ph:"Fase 5",t:"Conexión a Instagram API",d:"Leer métricas reales y programar publicaciones.",done:false,upcoming:true,ico:"brand-instagram",note:"Requiere cuenta Meta Business verificada."},
-    {ph:"Fase 6",t:"Automatización completa",d:"Publicación y optimización sin intervención manual.",done:false,upcoming:true,ico:"robot",note:"Disponible al completar las fases 1-5."},
-  ];
-  document.getElementById("roadmapPhases").innerHTML=steps.map(s=>{
-    const cc=s.done?"done":s.partial?"partial":"";const ci=s.done?"✓":`<i class="ti ti-${s.ico}"></i>`;
-    const bt=s.done?"Completado":(s.partial&&!s.done)?"En progreso":s.upcoming?"Próximamente":"Pendiente";
-    const bc=s.done?"done":(s.partial&&!s.done)?"partial":s.upcoming?"soon":"pending";
-    const ab=s.at&&!s.done?`<button class="primary" onclick="goTab('${s.at}')" style="font-size:13px;padding:5px 12px;margin-top:4px">${s.al}</button>`:"";
-    return `<div class="card" style="margin-bottom:10px;${s.upcoming?"opacity:.6":""}"><div class="phase"><div class="phase-circle ${cc}">${ci}</div><div class="phase-info"><div class="phase-meta"><span class="phase-lbl">${s.ph}</span><span class="badge ${bc}">${bt}</span></div><div class="phase-title">${s.t}</div><div class="phase-desc">${s.d}</div>${s.note?`<div class="phase-note">${s.note}</div>`:""}${ab}</div></div></div>`;
-  }).join("");
-}
-updateRoadmap();
+async function loadContent(){contentLog=await api("/api/content");refreshContentLog();}
+async function runContent(){const btn=document.getElementById("contentBtn");btn.disabled=true;btn.textContent="Generando ideas...";document.getElementById("contentLoading").style.display="block";document.getElementById("contentError").style.display="none";document.getElementById("ideasGrid").style.display="none";document.getElementById("contentEmpty").style.display="none";const cType=document.getElementById("cType").value;const cGoal=document.getElementById("cGoal").value;const cExtra=document.getElementById("cExtra").value.trim();try{const wCtx=wins.length>0?`Aprendizajes previos: ${wins.map(w=>w.desc).join("; ")}.`:"";const aCtx=analysisLog[0]?`Contexto de mercado: "${analysisLog[0].topic}".`:"";const result=await callAI(`Generá 5 ideas de contenido para ${cType} en Instagram, objetivo: ${cGoal}${cExtra?`, contexto: ${cExtra}`:""}.\n\nPara cada idea usá exactamente este formato:\n📌 [Título atractivo]\n💡 Concepto: [2-3 líneas]\n✍️ Copy: [texto completo para el caption]\n#️⃣ [hashtag1] [hashtag2] [hashtag3] [hashtag4] [hashtag5] [hashtag6]\n🎯 [Por qué va a funcionar]`,`Eres experto en contenido de Instagram. ${getCtx()} ${wCtx} ${aCtx} Respondé en español con ideas originales.`);const entry={type:cType,goal:cGoal,result,date:new Date().toLocaleDateString("es-AR")};await api("/api/content","POST",entry);contentLog.unshift(entry);document.getElementById("cExtra").value="";const ideas=parseIdeas(result);if(ideas)renderIdeas(ideas,{type:cType,goal:cGoal});else{document.getElementById("ideasGrid").innerHTML=`<div class="card"><div class="result-box">${result}</div></div>`;document.getElementById("ideasGrid").style.display="flex";}refreshContentLog();updateProgress();}catch(e){document.getElementById("contentError").textContent=e.message;document.getElementById("contentError").style.display="block";document.getElementById("contentEmpty").style.display="block";}finally{document.getElementById("contentLoading").style.display="none";btn.disabled=false;btn.textContent="Generar 5 ideas de contenido ↗";}}
+function refreshContentLog(){const log=contentLog.slice(1);if(log.length===0){document.getElementById("contentLog").style.display="none";return;}document.getElementById("contentLog").style.display="block";document.getElementById("contentLogList").innerHTML=log.slice(0,5).map((c,i)=>`<div class="log-item" onclick="showPastContent(${i+1})"><i class="ti ti-bulb"></i><span class="log-item-text">${c.type} — ${c.goal}</span><span class="log-item-date">${c.date}</span></div>`).join("");}
+function showPastContent(idx){const entry=contentLog[idx];if(!entry)return;const ideas=parseIdeas(entry.result);if(ideas)renderIdeas(ideas,{type:entry.type,goal:entry.goal});else{document.getElementById("ideasGrid").innerHTML=`<div class="card"><div class="result-box">${entry.result}</div></div>`;document.getElementById("ideasGrid").style.display="flex";}document.getElementById("contentEmpty").style.display="none";}
+async function loadWins(){wins=await api("/api/wins");refreshWins();}
+async function addWin(){const desc=document.getElementById("wDesc").value.trim();if(!desc)return;const metric=document.getElementById("wMetric").value.trim();await api("/api/wins","POST",{desc,metric,date:new Date().toLocaleDateString("es-AR")});await loadWins();document.getElementById("wDesc").value="";document.getElementById("wMetric").value="";updateProgress();}
+async function removeWin(id){await api("/api/wins/"+id,"DELETE");await loadWins();updateProgress();}
+function refreshWins(){document.getElementById("winsEmpty").style.display=wins.length===0?"block":"none";document.getElementById("winsList").innerHTML=wins.map(w=>`<div class="win-card"><div class="win-info"><div class="win-desc">${w.desc}</div>${w.metric?`<div class="win-metric"><i class="ti ti-trending-up"></i> ${w.metric}</div>`:""}<div class="win-date">${w.date}</div></div><button class="small" onclick="removeWin('${w._id}')"><i class="ti ti-trash"></i></button></div>`).join("");}
+function updateRoadmap(){const p=getProgress();document.getElementById("rmPct").textContent=p+"% activo";document.getElementById("rmFill").style.width=p+"%";const steps=[{ph:"Fase 1",t:"Configuración del perfil",d:"Identidad, audiencia y objetivos definidos.",done:profileSaved,ico:"building-store",at:"perfil",al:"Completar perfil ↗"},{ph:"Fase 2",t:"Análisis continuo de mercado",d:"Monitorear tendencias y competencia con IA.",done:analysisLog.length>=3,partial:analysisLog.length>0,ico:"chart-line",at:"analisis",al:"Ir a análisis ↗",note:`${analysisLog.length} análisis (recomendado: 3+)`},{ph:"Fase 3",t:"Generación de contenido con IA",d:"Ideas en tarjetas visuales listas para usar.",done:contentLog.length>=5,partial:contentLog.length>0,ico:"bulb",at:"contenido",al:"Generar contenido ↗",note:`${contentLog.length} sesiones`},{ph:"Fase 4",t:"Retroalimentación y aprendizaje",d:"La IA mejora sus recomendaciones con el tiempo.",done:wins.length>=5,partial:wins.length>0,ico:"star",at:"aprendizajes",al:"Agregar aprendizajes ↗",note:`${wins.length} aprendizajes`},{ph:"Fase 5",t:"Base de datos permanente",d:"Todo guardado: perfil, análisis, ideas y aprendizajes.",done:true,ico:"database",note:"✓ Conectada con MongoDB Atlas"},{ph:"Fase 6",t:"Conexión a Instagram API",d:"Leer métricas reales y retroalimentar la IA.",done:false,upcoming:true,ico:"brand-instagram",note:"Requiere cuenta Meta Business verificada."},{ph:"Fase 7",t:"Automatización completa",d:"Publicación y optimización sin intervención manual.",done:false,upcoming:true,ico:"robot",note:"Disponible al completar las fases anteriores."}];document.getElementById("roadmapPhases").innerHTML=steps.map(s=>{const cc=s.done?"done":s.partial?"partial":"";const ci=s.done?"✓":`<i class="ti ti-${s.ico}"></i>`;const bt=s.done?"Completado":(s.partial&&!s.done)?"En progreso":s.upcoming?"Próximamente":"Pendiente";const bc=s.done?"done":(s.partial&&!s.done)?"partial":s.upcoming?"soon":"pending";const ab=s.at&&!s.done?`<button class="primary" onclick="goTab('${s.at}')" style="font-size:13px;padding:5px 12px;margin-top:4px">${s.al}</button>`:"";return `<div class="card" style="margin-bottom:10px;${s.upcoming?"opacity:.6":""}"><div class="phase"><div class="phase-circle ${cc}">${ci}</div><div class="phase-info"><div class="phase-meta"><span class="phase-lbl">${s.ph}</span><span class="badge ${bc}">${bt}</span></div><div class="phase-title">${s.t}</div><div class="phase-desc">${s.d}</div>${s.note?`<div class="phase-note">${s.note}</div>`:""}${ab}</div></div></div>`;}).join("");}
+async function init(){await loadProfile();await loadAnalysis();await loadContent();await loadWins();updateRoadmap();}
+init();
 </script>
 </body>
 </html>
