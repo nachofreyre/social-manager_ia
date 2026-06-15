@@ -6,7 +6,6 @@ require("dotenv").config();
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.static("PUBLIC"));
 
 let db;
 
@@ -20,6 +19,29 @@ async function connectDB() {
     console.error("Error conectando a MongoDB:", err.message);
   }
 }
+
+// ── Login ──
+app.post("/api/login", (req, res) => {
+  const { password } = req.body;
+  if (password === process.env.APP_PASSWORD) {
+    res.json({ ok: true });
+  } else {
+    res.status(401).json({ error: "Contraseña incorrecta." });
+  }
+});
+
+// ── Middleware: verificar contraseña en todas las rutas /api (excepto login) ──
+app.use("/api", (req, res, next) => {
+  if (req.path === "/login") return next();
+  const auth = req.headers["x-app-password"];
+  if (!auth || auth !== process.env.APP_PASSWORD) {
+    return res.status(401).json({ error: "No autorizado." });
+  }
+  next();
+});
+
+// ── Archivos estáticos (después del middleware) ──
+app.use(express.static("PUBLIC"));
 
 // ── Perfil ──
 app.get("/api/profile", async (req, res) => {
