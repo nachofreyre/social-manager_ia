@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 require("dotenv").config();
 
 const app = express();
@@ -30,7 +30,7 @@ app.post("/api/login", (req, res) => {
   }
 });
 
-// ── Middleware: verificar contraseña en todas las rutas /api (excepto login) ──
+// ── Middleware auth ──
 app.use("/api", (req, res, next) => {
   if (req.path === "/login") return next();
   const auth = req.headers["x-app-password"];
@@ -40,7 +40,6 @@ app.use("/api", (req, res, next) => {
   next();
 });
 
-// ── Archivos estáticos (después del middleware) ──
 app.use(express.static("PUBLIC"));
 
 // ── Perfil ──
@@ -50,7 +49,6 @@ app.get("/api/profile", async (req, res) => {
     res.json(profile || {});
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
-
 app.post("/api/profile", async (req, res) => {
   try {
     await db.collection("profile").updateOne(
@@ -69,7 +67,6 @@ app.get("/api/analysis", async (req, res) => {
     res.json(list);
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
-
 app.post("/api/analysis", async (req, res) => {
   try {
     await db.collection("analysis").insertOne({ ...req.body, createdAt: new Date() });
@@ -84,7 +81,6 @@ app.get("/api/content", async (req, res) => {
     res.json(list);
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
-
 app.post("/api/content", async (req, res) => {
   try {
     await db.collection("content").insertOne({ ...req.body, createdAt: new Date() });
@@ -99,18 +95,51 @@ app.get("/api/wins", async (req, res) => {
     res.json(list);
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
-
 app.post("/api/wins", async (req, res) => {
   try {
     await db.collection("wins").insertOne({ ...req.body, createdAt: new Date() });
     res.json({ ok: true });
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
-
 app.delete("/api/wins/:id", async (req, res) => {
   try {
-    const { ObjectId } = require("mongodb");
     await db.collection("wins").deleteOne({ _id: new ObjectId(req.params.id) });
+    res.json({ ok: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// ── Historial de publicaciones ──
+app.get("/api/posts", async (req, res) => {
+  try {
+    const list = await db.collection("posts").find().sort({ publishedAt: -1 }).toArray();
+    res.json(list);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.post("/api/posts", async (req, res) => {
+  try {
+    const post = {
+      ...req.body,
+      metricsDeadline: new Date(new Date(req.body.publishedAt).getTime() + 72 * 60 * 60 * 1000),
+      metricsCompleted: false,
+      aiAnalysis: null,
+      createdAt: new Date()
+    };
+    const result = await db.collection("posts").insertOne(post);
+    res.json({ ok: true, id: result.insertedId });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.put("/api/posts/:id", async (req, res) => {
+  try {
+    await db.collection("posts").updateOne(
+      { _id: new ObjectId(req.params.id) },
+      { $set: { ...req.body, updatedAt: new Date() } }
+    );
+    res.json({ ok: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.delete("/api/posts/:id", async (req, res) => {
+  try {
+    await db.collection("posts").deleteOne({ _id: new ObjectId(req.params.id) });
     res.json({ ok: true });
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
