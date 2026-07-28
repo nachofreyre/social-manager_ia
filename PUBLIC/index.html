@@ -90,7 +90,7 @@
   .cal-legend-dot { width:10px; height:10px; border-radius:2px; flex-shrink:0; }
 
   /* MODAL CALENDARIO */
-  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:100; align-items:center; justify-content:center; }
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:9999; align-items:center; justify-content:center; }
   .modal-overlay.open { display:flex; }
   .modal { background:var(--bg); border-radius:var(--radius); padding:1.5rem; width:100%; max-width:440px; margin:1rem; max-height:90vh; overflow-y:auto; }
   .modal-title { font-size:16px; font-weight:700; margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; }
@@ -462,7 +462,7 @@ function renderCalendar(){
     let events=pub.map(p=>`<div class="cal-event published" title="${p.title}">${p.type.slice(0,1)} ${p.title.slice(0,14)}${p.title.length>14?"...":""}</div>`).join("");
     events+=plan.map(p=>`<div class="cal-event planned" onclick="openPlannedModal('${dateStr}','${p.id}')" title="${p.title}">${p.type.slice(0,1)} ${p.title.slice(0,14)}${p.title.length>14?"...":""}</div>`).join("");
     events+=sug.map(s=>`<div class="cal-event suggested" onclick="openSuggestedModal('${dateStr}','${encodeURIComponent(s.type||"")}','${encodeURIComponent(s.reason||"")}')" title="${s.reason||""}">${(s.type||"IA").slice(0,1)} IA: ${(s.type||"").slice(0,10)}</div>`).join("");
-    html+=`<div class="cal-day${isToday?" today":""}" onclick="openDayModal('${dateStr}',${isPast})"><div class="cal-day-num">${d}</div>${events}</div>`;
+    html+=`<div class="cal-day${isToday?" today":""}" onclick="openDayModal('${dateStr}',false)"><div class="cal-day-num">${d}</div>${events}</div>`;
   }
   const remaining=(7-((first+total)%7))%7;
   for(let i=1;i<=remaining;i++)html+=`<div class="cal-day other-month"><div class="cal-day-num">${i}</div></div>`;
@@ -478,7 +478,7 @@ function openDayModal(dateStr,isPast){
   let html="";
   if(pubToday.length>0){html+=`<div style="margin-bottom:16px"><div class="section-title">Publicado este día</div>${pubToday.map(p=>`<div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px"><span class="post-type-badge ${typeBadgeClass(p.type)}">${p.type}</span>${p.title}</div>`).join("")}</div>`;}
   if(existing.length>0){html+=`<div style="margin-bottom:16px"><div class="section-title">Planificado</div>${existing.map(p=>`<div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px"><span class="post-type-badge ${typeBadgeClass(p.type)}">${p.type}</span><span style="flex:1">${p.title}</span><button class="small" onclick="deletePlanned('${p.id}')"><i class="ti ti-trash"></i></button></div>`).join("")}</div>`;}
-  if(!isPast){html+=`<div class="section-title">Planificar nueva publicación</div><div class="field" style="margin-top:10px"><label>Título / idea</label><input id="planTitle" placeholder="Ej: Reel de temporada de verano"></div><div class="field"><label>Tipo</label><select id="planType"><option>Reels</option><option>Carrusel</option><option>Post estático</option><option>Stories</option></select></div><div class="field"><label>Objetivo</label><select id="planGoal"><option value="ventas">Ventas</option><option value="engagement">Engagement</option><option value="awareness">Awareness</option><option value="fidelización">Fidelización</option></select></div><div class="field"><label>Notas (opcional)</label><textarea id="planNotes" style="min-height:50px" placeholder="Ideas, referencias, contexto..."></textarea></div><button class="primary" style="width:100%" onclick="savePlanned('${dateStr}')">Agregar al calendario ↗</button>`;}
+  if(true){html+=`<div class="section-title">Planificar nueva publicación</div><div class="field" style="margin-top:10px"><label>Título / idea</label><input id="planTitle" placeholder="Ej: Reel de temporada de verano"></div><div class="field"><label>Tipo</label><select id="planType"><option>Reels</option><option>Carrusel</option><option>Post estático</option><option>Stories</option></select></div><div class="field"><label>Objetivo</label><select id="planGoal"><option value="ventas">Ventas</option><option value="engagement">Engagement</option><option value="awareness">Awareness</option><option value="fidelización">Fidelización</option></select></div><div class="field"><label>Notas (opcional)</label><textarea id="planNotes" style="min-height:50px" placeholder="Ideas, referencias, contexto..."></textarea></div><button class="primary" style="width:100%" onclick="savePlanned('${dateStr}')">Agregar al calendario ↗</button>`;}
   document.getElementById("modalContent").innerHTML=html;
   document.getElementById("calModal").classList.add("open");
 }
