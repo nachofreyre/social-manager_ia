@@ -64,6 +64,63 @@
   button.small { padding:4px 8px; font-size:12px; }
   button.btn-purple { background:var(--purple); color:#fff; border-color:var(--purple); }
   button.btn-purple:hover:not(:disabled) { background:#6d28d9; }
+  button.btn-green { background:var(--green); color:#fff; border-color:var(--green); }
+  button.btn-green:hover:not(:disabled) { background:#15803d; }
+
+  /* CALENDARIO */
+  .cal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+  .cal-nav { display:flex; align-items:center; gap:12px; }
+  .cal-month { font-size:18px; font-weight:700; min-width:180px; text-align:center; }
+  .cal-nav-btn { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; padding:0; }
+  .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
+  .cal-day-name { text-align:center; font-size:11px; font-weight:600; color:var(--text3); text-transform:uppercase; padding:4px 0; }
+  .cal-day { min-height:90px; border:1px solid var(--border); border-radius:var(--radius-sm); padding:6px; background:var(--bg); cursor:pointer; transition:border-color .15s; position:relative; }
+  .cal-day:hover { border-color:#111; }
+  .cal-day.other-month { background:var(--bg2); opacity:.5; cursor:default; }
+  .cal-day.other-month:hover { border-color:var(--border); }
+  .cal-day.today { border-color:var(--blue); border-width:2px; }
+  .cal-day-num { font-size:12px; font-weight:600; margin-bottom:4px; color:var(--text2); }
+  .cal-day.today .cal-day-num { color:var(--blue); }
+  .cal-event { border-radius:4px; padding:2px 6px; font-size:11px; font-weight:500; margin-bottom:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; cursor:pointer; }
+  .cal-event.published { background:#111; color:#fff; }
+  .cal-event.planned { background:var(--blue-bg); color:var(--blue); border:1px solid #bfdbfe; }
+  .cal-event.suggested { background:var(--green-bg); color:var(--green); border:1px solid #86efac; }
+  .cal-legend { display:flex; gap:16px; flex-wrap:wrap; margin-bottom:16px; }
+  .cal-legend-item { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--text2); }
+  .cal-legend-dot { width:10px; height:10px; border-radius:2px; flex-shrink:0; }
+
+  /* MODAL CALENDARIO */
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:100; align-items:center; justify-content:center; }
+  .modal-overlay.open { display:flex; }
+  .modal { background:var(--bg); border-radius:var(--radius); padding:1.5rem; width:100%; max-width:440px; margin:1rem; max-height:90vh; overflow-y:auto; }
+  .modal-title { font-size:16px; font-weight:700; margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; }
+  .modal-close { background:transparent; border:none; font-size:20px; cursor:pointer; color:var(--text2); padding:0; line-height:1; }
+  .modal-close:hover { background:transparent; color:#111; }
+
+  /* SUGERENCIAS */
+  .suggestion-card { background:var(--green-bg); border:1px solid #86efac; border-radius:var(--radius-sm); padding:.875rem 1rem; margin-bottom:10px; }
+  .suggestion-day { font-weight:700; font-size:14px; color:var(--green); margin-bottom:4px; }
+  .suggestion-reason { font-size:13px; color:#166534; line-height:1.5; }
+  .suggestion-type { display:inline-block; background:#fff; color:var(--green); border-radius:20px; padding:2px 8px; font-size:11px; font-weight:600; margin-top:6px; }
+
+  /* MÉTRICAS */
+  .kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:12px; margin-bottom:20px; }
+  .kpi-card { background:var(--bg); border:1px solid var(--border); border-radius:var(--radius); padding:1rem; }
+  .kpi-label { font-size:11px; color:var(--text3); text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px; display:flex; align-items:center; gap:5px; }
+  .kpi-val { font-size:26px; font-weight:700; }
+  .kpi-sub { font-size:11px; color:var(--text2); margin-top:3px; }
+  .chart-card { background:var(--bg); border:1px solid var(--border); border-radius:var(--radius); padding:1.25rem; margin-bottom:16px; }
+  .chart-title { font-size:14px; font-weight:600; margin-bottom:4px; }
+  .chart-sub { font-size:12px; color:var(--text2); margin-bottom:16px; }
+  .chart-wrap { position:relative; height:260px; }
+  .best-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px; }
+  .best-card { background:var(--bg); border:1px solid var(--border); border-radius:var(--radius); padding:1rem; }
+  .best-label { font-size:11px; color:var(--text3); text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px; display:flex; align-items:center; gap:5px; }
+  .best-title { font-weight:600; font-size:14px; margin-bottom:4px; }
+  .best-meta { font-size:12px; color:var(--text2); }
+  .metric-filter { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px; }
+  .metric-pill { padding:4px 12px; border-radius:20px; font-size:12px; font-weight:500; cursor:pointer; border:1px solid var(--border); background:var(--bg); color:var(--text2); transition:all .15s; }
+  .metric-pill.active { background:#111; color:#fff; border-color:#111; }
 
   /* IDEAS */
   .ideas-grid { display:flex; flex-direction:column; gap:16px; margin-top:16px; }
@@ -82,32 +139,8 @@
   .idea-footer { display:flex; gap:6px; flex-wrap:wrap; padding:.75rem 1rem; border-top:1px solid var(--border); background:var(--bg2); }
   .tag { border-radius:20px; padding:3px 10px; font-size:12px; font-weight:500; background:var(--bg3); color:var(--text2); }
 
-  /* MÉTRICAS DASHBOARD */
-  .kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:12px; margin-bottom:20px; }
-  .kpi-card { background:var(--bg); border:1px solid var(--border); border-radius:var(--radius); padding:1rem; }
-  .kpi-label { font-size:11px; color:var(--text3); text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px; display:flex; align-items:center; gap:5px; }
-  .kpi-val { font-size:26px; font-weight:700; }
-  .kpi-sub { font-size:11px; color:var(--text2); margin-top:3px; }
-  .chart-card { background:var(--bg); border:1px solid var(--border); border-radius:var(--radius); padding:1.25rem; margin-bottom:16px; }
-  .chart-title { font-size:14px; font-weight:600; margin-bottom:4px; }
-  .chart-sub { font-size:12px; color:var(--text2); margin-bottom:16px; }
-  .chart-wrap { position:relative; height:260px; }
-  .best-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px; }
-  .best-card { background:var(--bg); border:1px solid var(--border); border-radius:var(--radius); padding:1rem; }
-  .best-label { font-size:11px; color:var(--text3); text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px; display:flex; align-items:center; gap:5px; }
-  .best-title { font-weight:600; font-size:14px; margin-bottom:4px; }
-  .best-meta { font-size:12px; color:var(--text2); }
-  .metric-filter { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px; }
-  .metric-pill { padding:4px 12px; border-radius:20px; font-size:12px; font-weight:500; cursor:pointer; border:1px solid var(--border); background:var(--bg); color:var(--text2); transition:all .15s; }
-  .metric-pill.active { background:#111; color:#fff; border-color:#111; }
-  .no-data { text-align:center; padding:3rem; color:var(--text2); }
-  .no-data i { font-size:36px; display:block; margin-bottom:8px; opacity:.4; }
-
   /* HISTORIAL */
   .result-box { font-size:13px; line-height:1.75; white-space:pre-wrap; max-height:460px; overflow-y:auto; }
-  .result-head { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px; gap:8px; }
-  .result-title { font-weight:600; font-size:14px; }
-  .result-date { font-size:12px; color:var(--text2); flex-shrink:0; }
   .loading { text-align:center; padding:2.5rem; background:var(--bg); border:1px solid var(--border); border-radius:var(--radius); margin-top:12px; color:var(--text2); }
   .loading i { font-size:32px; display:block; margin-bottom:10px; }
   .error { background:var(--red-bg); border:1px solid #fca5a5; border-radius:var(--radius-sm); padding:.75rem 1rem; font-size:13px; color:var(--red); margin-top:12px; }
@@ -119,16 +152,16 @@
   .log-item-text { flex:1; }
   .log-item-date { color:var(--text2); font-size:12px; flex-shrink:0; }
   .post-card { background:var(--bg); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:12px; }
-  .post-card-header { padding:.875rem 1rem; display:flex; align-items:center; gap:12px; border-bottom:1px solid var(--border); }
+  .post-card-header { padding:.875rem 1rem; display:flex; align-items:center; gap:12px; border-bottom:1px solid var(--border); flex-wrap:wrap; }
   .post-type-badge { padding:3px 10px; border-radius:20px; font-size:11px; font-weight:600; background:var(--bg3); color:var(--text2); flex-shrink:0; }
   .post-type-badge.reel { background:var(--purple-bg); color:var(--purple); }
   .post-type-badge.carrusel { background:var(--blue-bg); color:var(--blue); }
   .post-type-badge.post { background:var(--green-bg); color:var(--green); }
   .post-type-badge.stories { background:var(--yellow-bg); color:var(--yellow); }
-  .post-title { font-weight:600; font-size:14px; flex:1; }
+  .post-title { font-weight:600; font-size:14px; flex:1; min-width:0; }
   .post-date { font-size:12px; color:var(--text2); flex-shrink:0; }
   .post-card-body { padding:1rem; }
-  .post-metrics-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(90px,1fr)); gap:8px; margin-bottom:12px; }
+  .post-metrics-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(85px,1fr)); gap:8px; margin-bottom:12px; }
   .post-metric { background:var(--bg2); border-radius:var(--radius-sm); padding:.6rem .75rem; text-align:center; }
   .post-metric-val { font-size:18px; font-weight:700; }
   .post-metric-label { font-size:11px; color:var(--text3); margin-top:2px; }
@@ -162,7 +195,7 @@
   .win-date { font-size:12px; color:var(--text3); }
   .tab-content { display:none; }
   .tab-content.active { display:block; }
-  @media (max-width:580px) { .action-grid,.field-grid,.best-grid { grid-template-columns:1fr; } }
+  @media (max-width:580px) { .action-grid,.field-grid,.best-grid { grid-template-columns:1fr; } .cal-day { min-height:60px; } }
 </style>
 </head>
 <body>
@@ -176,6 +209,14 @@
     <div class="login-field"><label>Contraseña</label><input type="password" id="loginPassword" placeholder="Ingresá la contraseña..." onkeydown="if(event.key==='Enter')doLogin()"></div>
     <button class="login-btn" onclick="doLogin()">Ingresar ↗</button>
     <div class="login-error" id="loginError">Contraseña incorrecta. Intentá de nuevo.</div>
+  </div>
+</div>
+
+<!-- MODAL CALENDARIO -->
+<div class="modal-overlay" id="calModal">
+  <div class="modal">
+    <div class="modal-title"><span id="modalTitle">Planificar publicación</span><button class="modal-close" onclick="closeModal()">×</button></div>
+    <div id="modalContent"></div>
   </div>
 </div>
 
@@ -194,6 +235,7 @@
   <div class="tabs">
     <button class="tab-btn active" onclick="showTab('perfil',this)"><i class="ti ti-building-store"></i> Perfil</button>
     <button class="tab-btn" onclick="showTab('dashboard',this)"><i class="ti ti-layout-dashboard"></i> Dashboard</button>
+    <button class="tab-btn" onclick="showTab('calendario',this)"><i class="ti ti-calendar"></i> Calendario</button>
     <button class="tab-btn" onclick="showTab('metricas',this)"><i class="ti ti-chart-bar"></i> Métricas</button>
     <button class="tab-btn" onclick="showTab('analisis',this)"><i class="ti ti-chart-line"></i> Análisis</button>
     <button class="tab-btn" onclick="showTab('contenido',this)"><i class="ti ti-bulb"></i> Contenido IA</button>
@@ -205,7 +247,7 @@
   <!-- PERFIL -->
   <div id="tab-perfil" class="tab-content active">
     <div class="card">
-      <p style="color:var(--text2);margin-bottom:1.25rem;font-size:13px">Configurá el perfil de tu negocio. Se guarda automáticamente en la base de datos.</p>
+      <p style="color:var(--text2);margin-bottom:1.25rem;font-size:13px">Configurá el perfil de tu negocio. Se guarda automáticamente.</p>
       <div style="max-width:520px">
         <div class="field"><label>Nombre del negocio</label><input id="p_name" placeholder="Ej: Café El Molino"></div>
         <div class="field"><label>Industria / Rubro</label><input id="p_industry" placeholder="Ej: Gastronomía, moda, tecnología..."></div>
@@ -225,23 +267,43 @@
     <div id="dashContent" style="display:none">
       <div class="card-grid" id="metricsGrid"></div>
       <div class="action-grid">
-        <div class="action-card" onclick="goTab('metricas')"><div class="action-card-head"><i class="ti ti-chart-bar"></i> Panel de métricas</div><div class="action-card-desc" id="d_metricas">Sin datos aún</div></div>
-        <div class="action-card" onclick="goTab('analisis')"><div class="action-card-head"><i class="ti ti-chart-line"></i> Análisis de mercado</div><div class="action-card-desc" id="d_analisis">Sin análisis aún</div></div>
-        <div class="action-card" onclick="goTab('contenido')"><div class="action-card-head"><i class="ti ti-bulb"></i> Generar contenido</div><div class="action-card-desc" id="d_contenido">0 sesiones</div></div>
+        <div class="action-card" onclick="goTab('calendario')"><div class="action-card-head"><i class="ti ti-calendar"></i> Calendario</div><div class="action-card-desc" id="d_calendario">Planificá el mes</div></div>
+        <div class="action-card" onclick="goTab('metricas')"><div class="action-card-head"><i class="ti ti-chart-bar"></i> Métricas</div><div class="action-card-desc" id="d_metricas">Sin datos aún</div></div>
+        <div class="action-card" onclick="goTab('contenido')"><div class="action-card-head"><i class="ti ti-bulb"></i> Contenido IA</div><div class="action-card-desc" id="d_contenido">0 sesiones</div></div>
         <div class="action-card" onclick="goTab('historial')"><div class="action-card-head"><i class="ti ti-history"></i> Historial</div><div class="action-card-desc" id="d_historial">0 publicaciones</div></div>
       </div>
     </div>
   </div>
 
+  <!-- CALENDARIO -->
+  <div id="tab-calendario" class="tab-content">
+    <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px">
+      <div style="flex:1;min-width:280px">
+        <div class="cal-header">
+          <div class="cal-nav">
+            <button class="cal-nav-btn" onclick="changeMonth(-1)"><i class="ti ti-chevron-left"></i></button>
+            <span class="cal-month" id="calMonthLabel"></span>
+            <button class="cal-nav-btn" onclick="changeMonth(1)"><i class="ti ti-chevron-right"></i></button>
+          </div>
+          <button class="btn-green" onclick="getSuggestions()" id="suggestBtn" style="font-size:12px;padding:6px 12px"><i class="ti ti-robot"></i> Sugerencias IA</button>
+        </div>
+        <div class="cal-legend">
+          <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#111"></div> Publicado</div>
+          <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--blue-bg);border:1px solid #bfdbfe"></div> Planificado</div>
+          <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--green-bg);border:1px solid #86efac"></div> Sugerido por IA</div>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
+      </div>
+      <div style="width:240px;flex-shrink:0" id="suggestionsPanel" style="display:none"></div>
+    </div>
+  </div>
+
   <!-- MÉTRICAS -->
   <div id="tab-metricas" class="tab-content">
-    <div id="metricasNoData" class="empty-state" style="display:none"><i class="ti ti-chart-bar"></i><p style="margin-bottom:12px">Todavía no hay publicaciones con métricas completas.</p><p style="font-size:13px;color:var(--text3)">Registrá publicaciones en Historial y completá sus métricas a las 72hs.</p><button onclick="goTab('historial')" style="margin-top:12px">Ir al historial ↗</button></div>
+    <div id="metricasNoData" class="empty-state" style="display:none"><i class="ti ti-chart-bar"></i><p style="margin-bottom:12px">Todavía no hay publicaciones con métricas completas.</p><button onclick="goTab('historial')" style="margin-top:12px">Ir al historial ↗</button></div>
     <div id="metricasContent">
-      <!-- KPIs -->
       <div class="kpi-grid" id="kpiGrid"></div>
-      <!-- Mejor publicación -->
       <div class="best-grid" id="bestGrid"></div>
-      <!-- Gráfico evolución -->
       <div class="chart-card">
         <div class="chart-title">Evolución por publicación</div>
         <div class="chart-sub">Métricas de las últimas publicaciones con datos completos</div>
@@ -256,10 +318,9 @@
         </div>
         <div class="chart-wrap"><canvas id="evolutionChart"></canvas></div>
       </div>
-      <!-- Gráfico comparación por tipo -->
       <div class="chart-card">
         <div class="chart-title">Rendimiento promedio por tipo de contenido</div>
-        <div class="chart-sub">Promedio de alcance según el formato de publicación</div>
+        <div class="chart-sub">Promedio de alcance según el formato</div>
         <div class="chart-wrap"><canvas id="typeChart"></canvas></div>
       </div>
     </div>
@@ -273,7 +334,7 @@
     </div>
     <div id="analysisLoading" class="loading" style="display:none"><i class="ti ti-loader"></i>Analizando con Claude...</div>
     <div id="analysisError" class="error" style="display:none"></div>
-    <div id="analysisResult" class="card" style="display:none;margin-bottom:16px"><div class="result-head"><span class="result-title" id="aResultTopic"></span><span class="result-date" id="aResultDate"></span></div><div class="result-box" id="aResultText"></div></div>
+    <div id="analysisResult" class="card" style="display:none;margin-bottom:16px"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;gap:8px"><span style="font-weight:600;font-size:14px" id="aResultTopic"></span><span style="font-size:12px;color:var(--text2);flex-shrink:0" id="aResultDate"></span></div><div class="result-box" id="aResultText"></div></div>
     <div id="analysisEmpty" class="empty-state"><i class="ti ti-chart-line"></i><p>Escribí un tema arriba para hacer tu primer análisis.</p></div>
     <div id="analysisLog" style="display:none"><div class="section-title" style="margin-top:4px">Análisis anteriores</div><div id="analysisLogList"></div></div>
   </div>
@@ -299,16 +360,16 @@
   <!-- HISTORIAL -->
   <div id="tab-historial" class="tab-content">
     <div class="card" style="margin-bottom:16px">
-      <p style="color:var(--text2);margin-bottom:1rem;font-size:13px">Registrá cada publicación. Las métricas se completan a las 72hs para comparar en igualdad de condiciones.</p>
+      <p style="color:var(--text2);margin-bottom:1rem;font-size:13px">Registrá cada publicación. Las métricas se completan a las 72hs.</p>
       <div class="field-grid">
         <div><label>Título / Descripción breve</label><input id="postTitle" placeholder="Ej: Reel mostrando el proceso de producción"></div>
         <div><label>Fecha de publicación</label><input type="datetime-local" id="postDate"></div>
       </div>
       <div class="field-grid">
         <div><label>Tipo</label><select id="postType"><option value="Reels">Reels</option><option value="Carrusel">Carrusel</option><option value="Post estático">Post estático</option><option value="Stories">Stories</option><option value="Live">Live</option></select></div>
-        <div><label>Link de la publicación (opcional)</label><input id="postLink" placeholder="https://instagram.com/p/..."></div>
+        <div><label>Link (opcional)</label><input id="postLink" placeholder="https://instagram.com/p/..."></div>
       </div>
-      <div class="field"><label>Notas iniciales del CM</label><textarea id="postNotes" placeholder="Ej: Usamos música trending, publicamos a las 19hs, apuntamos al segmento joven..."></textarea></div>
+      <div class="field"><label>Notas iniciales del CM</label><textarea id="postNotes" placeholder="Ej: Música trending, publicamos a las 19hs, apuntamos al segmento joven..."></textarea></div>
       <button class="primary" onclick="addPost()">Registrar publicación ↗</button>
       <p id="postMsg" style="display:none" class="success-text"><i class="ti ti-check"></i> Publicación registrada correctamente</p>
     </div>
@@ -340,11 +401,13 @@
 </div>
 
 <script>
-let appPassword="",profileSaved=false,profile={},analysisLog=[],contentLog=[],wins=[],posts=[];
+let appPassword="",profileSaved=false,profile={},analysisLog=[],contentLog=[],wins=[],posts=[],calPlanned=[];
 let evolutionChart=null,typeChart=null,currentMetric="reach";
+let calYear=new Date().getFullYear(),calMonth=new Date().getMonth();
+let suggestions=[];
 
 // ── Login ──
-async function doLogin(){const pw=document.getElementById("loginPassword").value.trim();if(!pw)return;const res=await fetch("/api/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({password:pw})});if(res.ok){appPassword=pw;sessionStorage.setItem("appPassword",pw);document.getElementById("loginScreen").style.display="none";document.getElementById("appScreen").style.display="block";init();}else{document.getElementById("loginError").style.display="block";}}
+async function doLogin(){const pw=document.getElementById("loginPassword").value.trim();if(!pw)return;const res=await fetch("/api/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({password:pw})});if(res.ok){appPassword=pw;sessionStorage.setItem("appPassword",pw);document.getElementById("loginScreen").style.display="none";document.getElementById("appScreen").style.display="block";init();}else document.getElementById("loginError").style.display="block";}
 function doLogout(){sessionStorage.removeItem("appPassword");appPassword="";document.getElementById("appScreen").style.display="none";document.getElementById("loginScreen").style.display="flex";document.getElementById("loginPassword").value="";document.getElementById("loginError").style.display="none";}
 const savedPw=sessionStorage.getItem("appPassword");
 if(savedPw){fetch("/api/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({password:savedPw})}).then(r=>{if(r.ok){appPassword=savedPw;document.getElementById("loginScreen").style.display="none";document.getElementById("appScreen").style.display="block";init();}});}
@@ -355,14 +418,118 @@ async function callAI(prompt,system){const d=await api("/api/chat","POST",{promp
 
 // ── Helpers ──
 function getCtx(){if(!profileSaved)return "";return `Negocio: "${profile.name}" (${profile.industry}). Audiencia: ${profile.audience}. Competidores: ${profile.competitors}. Voz: ${profile.voice||"profesional"}. Objetivos: ${profile.goals||"aumentar ventas"}.`;}
-function getProgress(){return Math.min((profileSaved?15:0)+(analysisLog.length>=1?10:0)+(analysisLog.length>=3?5:0)+(contentLog.length>=1?10:0)+(posts.length>=1?15:0)+(posts.filter(p=>p.metricsCompleted).length>=3?15:0)+(wins.length>=1?10:0)+(wins.length>=5?5:0),85);}
+function getProgress(){return Math.min((profileSaved?15:0)+(analysisLog.length>=1?10:0)+(contentLog.length>=1?10:0)+(posts.length>=1?15:0)+(posts.filter(p=>p.metricsCompleted).length>=3?15:0)+(calPlanned.length>=1?10:0)+(wins.length>=1?10:0)+(wins.length>=5?5:0),90);}
 function updateProgress(){const p=getProgress();document.getElementById("progFill").style.width=p+"%";document.getElementById("progText").textContent=p+"% activo";if(profileSaved)document.getElementById("progWrap").style.display="flex";}
-function showTab(id,btn){document.querySelectorAll(".tab-content").forEach(t=>t.classList.remove("active"));document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));document.getElementById("tab-"+id).classList.add("active");if(btn)btn.classList.add("active");if(id==="dashboard")updateDashboard();if(id==="roadmap")updateRoadmap();if(id==="historial")renderPosts();if(id==="metricas")renderMetricsDashboard();}
-function goTab(id){const tabs=["perfil","dashboard","metricas","analisis","contenido","historial","aprendizajes","roadmap"];const btns=document.querySelectorAll(".tab-btn");const i=tabs.indexOf(id);if(i>=0)showTab(id,btns[i]);}
+function showTab(id,btn){document.querySelectorAll(".tab-content").forEach(t=>t.classList.remove("active"));document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));document.getElementById("tab-"+id).classList.add("active");if(btn)btn.classList.add("active");if(id==="dashboard")updateDashboard();if(id==="roadmap")updateRoadmap();if(id==="historial")renderPosts();if(id==="metricas")renderMetricsDashboard();if(id==="calendario")renderCalendar();}
+function goTab(id){const tabs=["perfil","dashboard","calendario","metricas","analisis","contenido","historial","aprendizajes","roadmap"];const btns=document.querySelectorAll(".tab-btn");const i=tabs.indexOf(id);if(i>=0)showTab(id,btns[i]);}
 function formatDate(d){return new Date(d).toLocaleDateString("es-AR",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"});}
 function hoursLeft(deadline){return Math.max(0,Math.ceil((new Date(deadline)-new Date())/3600000));}
 function typeBadgeClass(type){const t=(type||"").toLowerCase();if(t.includes("reel"))return "reel";if(t.includes("carrusel"))return "carrusel";if(t.includes("post"))return "post";if(t.includes("stories"))return "stories";return "";}
 function avg(arr){return arr.length?Math.round(arr.reduce((a,b)=>a+b,0)/arr.length):0;}
+function toDateStr(d){return new Date(d).toISOString().slice(0,10);}
+
+// ── CALENDARIO ──
+function changeMonth(dir){calMonth+=dir;if(calMonth>11){calMonth=0;calYear++;}if(calMonth<0){calMonth=11;calYear--;}renderCalendar();}
+
+function renderCalendar(){
+  const months=["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+  document.getElementById("calMonthLabel").textContent=`${months[calMonth]} ${calYear}`;
+  const grid=document.getElementById("calGrid");
+  const days=["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"];
+  const first=new Date(calYear,calMonth,1).getDay();
+  const total=new Date(calYear,calMonth+1,0).getDate();
+  const prevTotal=new Date(calYear,calMonth,0).getDate();
+  const today=new Date();
+  const todayStr=toDateStr(today);
+
+  // Mapas por fecha
+  const publishedMap={};
+  posts.forEach(p=>{const d=toDateStr(p.publishedAt);if(!publishedMap[d])publishedMap[d]=[];publishedMap[d].push(p);});
+  const plannedMap={};
+  calPlanned.forEach(p=>{const d=p.date;if(!plannedMap[d])plannedMap[d]=[];plannedMap[d].push(p);});
+  const sugMap={};
+  suggestions.forEach(s=>{if(s.date){if(!sugMap[s.date])sugMap[s.date]=[];sugMap[s.date].push(s);}});
+
+  let html=days.map(d=>`<div class="cal-day-name">${d}</div>`).join("");
+  for(let i=0;i<first;i++){const day=prevTotal-first+i+1;html+=`<div class="cal-day other-month"><div class="cal-day-num">${day}</div></div>`;}
+  for(let d=1;d<=total;d++){
+    const dateStr=`${calYear}-${String(calMonth+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+    const isToday=dateStr===todayStr;
+    const pub=publishedMap[dateStr]||[];
+    const plan=plannedMap[dateStr]||[];
+    const sug=sugMap[dateStr]||[];
+    const isPast=new Date(dateStr)<new Date(todayStr);
+    let events=pub.map(p=>`<div class="cal-event published" title="${p.title}">${p.type.slice(0,1)} ${p.title.slice(0,14)}${p.title.length>14?"...":""}</div>`).join("");
+    events+=plan.map(p=>`<div class="cal-event planned" onclick="openPlannedModal('${dateStr}','${p.id}')" title="${p.title}">${p.type.slice(0,1)} ${p.title.slice(0,14)}${p.title.length>14?"...":""}</div>`).join("");
+    events+=sug.map(s=>`<div class="cal-event suggested" onclick="openSuggestedModal('${dateStr}','${encodeURIComponent(s.type||"")}','${encodeURIComponent(s.reason||"")}')" title="${s.reason||""}">${(s.type||"IA").slice(0,1)} IA: ${(s.type||"").slice(0,10)}</div>`).join("");
+    html+=`<div class="cal-day${isToday?" today":""}" onclick="openDayModal('${dateStr}',${isPast})"><div class="cal-day-num">${d}</div>${events}</div>`;
+  }
+  const remaining=(7-((first+total)%7))%7;
+  for(let i=1;i<=remaining;i++)html+=`<div class="cal-day other-month"><div class="cal-day-num">${i}</div></div>`;
+  grid.innerHTML=html;
+}
+
+function openDayModal(dateStr,isPast){
+  const d=new Date(dateStr+"T12:00:00");
+  const label=d.toLocaleDateString("es-AR",{weekday:"long",day:"numeric",month:"long"});
+  document.getElementById("modalTitle").textContent=label;
+  const existing=calPlanned.filter(p=>p.date===dateStr);
+  const pubToday=posts.filter(p=>toDateStr(p.publishedAt)===dateStr);
+  let html="";
+  if(pubToday.length>0){html+=`<div style="margin-bottom:16px"><div class="section-title">Publicado este día</div>${pubToday.map(p=>`<div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px"><span class="post-type-badge ${typeBadgeClass(p.type)}">${p.type}</span>${p.title}</div>`).join("")}</div>`;}
+  if(existing.length>0){html+=`<div style="margin-bottom:16px"><div class="section-title">Planificado</div>${existing.map(p=>`<div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px"><span class="post-type-badge ${typeBadgeClass(p.type)}">${p.type}</span><span style="flex:1">${p.title}</span><button class="small" onclick="deletePlanned('${p.id}')"><i class="ti ti-trash"></i></button></div>`).join("")}</div>`;}
+  if(!isPast){html+=`<div class="section-title">Planificar nueva publicación</div><div class="field" style="margin-top:10px"><label>Título / idea</label><input id="planTitle" placeholder="Ej: Reel de temporada de verano"></div><div class="field"><label>Tipo</label><select id="planType"><option>Reels</option><option>Carrusel</option><option>Post estático</option><option>Stories</option></select></div><div class="field"><label>Objetivo</label><select id="planGoal"><option value="ventas">Ventas</option><option value="engagement">Engagement</option><option value="awareness">Awareness</option><option value="fidelización">Fidelización</option></select></div><div class="field"><label>Notas (opcional)</label><textarea id="planNotes" style="min-height:50px" placeholder="Ideas, referencias, contexto..."></textarea></div><button class="primary" style="width:100%" onclick="savePlanned('${dateStr}')">Agregar al calendario ↗</button>`;}
+  document.getElementById("modalContent").innerHTML=html;
+  document.getElementById("calModal").classList.add("open");
+}
+
+function openPlannedModal(dateStr,id){openDayModal(dateStr,false);}
+
+function openSuggestedModal(dateStr,type,reason){
+  const d=new Date(dateStr+"T12:00:00");
+  const label=d.toLocaleDateString("es-AR",{weekday:"long",day:"numeric",month:"long"});
+  document.getElementById("modalTitle").textContent="Sugerencia IA — "+label;
+  document.getElementById("modalContent").innerHTML=`<div class="suggestion-card" style="margin-bottom:16px"><div class="suggestion-day"><i class="ti ti-robot"></i> Sugerencia de Claude</div><div class="suggestion-reason">${decodeURIComponent(reason)}</div><span class="suggestion-type">${decodeURIComponent(type)}</span></div><div class="field"><label>Título / idea</label><input id="planTitle" value="${decodeURIComponent(type)} — " placeholder="Completá el título..."></div><div class="field"><label>Tipo</label><select id="planType"><option ${decodeURIComponent(type)==="Reels"?"selected":""}>Reels</option><option ${decodeURIComponent(type)==="Carrusel"?"selected":""}>Carrusel</option><option ${decodeURIComponent(type)==="Post estático"?"selected":""}>Post estático</option><option>Stories</option></select></div><div class="field"><label>Objetivo</label><select id="planGoal"><option value="ventas">Ventas</option><option value="engagement">Engagement</option><option value="awareness">Awareness</option><option value="fidelización">Fidelización</option></select></div><div class="field"><label>Notas</label><textarea id="planNotes" style="min-height:50px" placeholder="Ideas adicionales..."></textarea></div><button class="primary" style="width:100%" onclick="savePlanned('${dateStr}')">Agregar al calendario ↗</button>`;
+  document.getElementById("calModal").classList.add("open");
+}
+
+function closeModal(){document.getElementById("calModal").classList.remove("open");}
+
+async function savePlanned(dateStr){
+  const title=document.getElementById("planTitle")?.value.trim();
+  if(!title){alert("Escribí un título.");return;}
+  const entry={id:Date.now().toString(),date:dateStr,title,type:document.getElementById("planType")?.value||"Reels",goal:document.getElementById("planGoal")?.value||"engagement",notes:document.getElementById("planNotes")?.value||""};
+  calPlanned.push(entry);
+  localStorage.setItem("calPlanned",JSON.stringify(calPlanned));
+  closeModal();renderCalendar();updateProgress();
+}
+
+function deletePlanned(id){calPlanned=calPlanned.filter(p=>p.id!==id);localStorage.setItem("calPlanned",JSON.stringify(calPlanned));closeModal();renderCalendar();}
+
+async function getSuggestions(){
+  const btn=document.getElementById("suggestBtn");btn.disabled=true;btn.innerHTML='<i class="ti ti-loader"></i> Analizando...';
+  const panel=document.getElementById("suggestionsPanel");
+  try{
+    const completed=posts.filter(p=>p.metricsCompleted&&p.metrics);
+    const bestDays=completed.length>0?`Los mejores resultados históricos se dieron los días: ${[...new Set(completed.map(p=>new Date(p.publishedAt).toLocaleDateString("es-AR",{weekday:"long"})))].join(", ")}.`:"Sin datos históricos de días aún.";
+    const bestTypes=completed.length>0?`Los tipos con mejor alcance promedio: ${Object.entries(completed.reduce((acc,p)=>{if(!acc[p.type])acc[p.type]=[];acc[p.type].push(p.metrics.reach||0);return acc;},{})).sort((a,b)=>avg(b[1])-avg(a[1])).slice(0,2).map(([t,v])=>`${t} (${avg(v)} alcance prom.)`).join(", ")}.`:"";
+    const winsCtx=wins.length>0?`Aprendizajes previos: ${wins.slice(0,3).map(w=>w.desc).join("; ")}.`:"";
+    const months=["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+    const result=await callAI(
+      `Sugerí 5 días óptimos para publicar en Instagram durante ${months[calMonth]} ${calYear}.\n\n${bestDays}\n${bestTypes}\n${winsCtx}\n\nPara cada sugerencia respondé EXACTAMENTE en este formato JSON (sin markdown, solo el array):\n[{"date":"${calYear}-${String(calMonth+1).padStart(2,"0")}-DD","type":"Tipo de contenido","reason":"Por qué este día y tipo específicamente"}]`,
+      `Eres experto en estrategia de contenido para Instagram. ${getCtx()} Respondé solo con el JSON solicitado, sin texto adicional.`
+    );
+    try{
+      const clean=result.replace(/```json|```/g,"").trim();
+      const parsed=JSON.parse(clean);
+      suggestions=parsed.filter(s=>s.date&&s.date.startsWith(`${calYear}-${String(calMonth+1).padStart(2,"0")}`));
+      panel.style.display="block";
+      panel.innerHTML=`<div class="card"><div style="font-weight:600;font-size:13px;margin-bottom:12px;display:flex;align-items:center;gap:6px"><i class="ti ti-robot"></i> Sugerencias de Claude</div>${suggestions.map(s=>`<div class="suggestion-card"><div class="suggestion-day">${new Date(s.date+"T12:00:00").toLocaleDateString("es-AR",{weekday:"long",day:"numeric"})}</div><div class="suggestion-reason">${s.reason}</div><span class="suggestion-type">${s.type}</span></div>`).join("")}<p style="font-size:11px;color:var(--text3);margin-top:8px">Hacé clic en los días verdes del calendario para planificarlos.</p></div>`;
+      renderCalendar();
+    }catch(e){panel.style.display="block";panel.innerHTML=`<div class="card"><p style="font-size:13px;color:var(--text2)">${result}</p></div>`;}
+  }catch(e){alert("Error: "+e.message);}
+  finally{btn.disabled=false;btn.innerHTML='<i class="ti ti-robot"></i> Sugerencias IA';}
+}
 
 // ── Métricas Dashboard ──
 function renderMetricsDashboard(){
@@ -373,69 +540,32 @@ function renderMetricsDashboard(){
   const totalLikes=completed.reduce((a,p)=>a+(p.metrics.likes||0),0);
   const totalSales=completed.reduce((a,p)=>a+(p.metrics.sales||0),0);
   const totalInquiries=completed.reduce((a,p)=>a+(p.metrics.inquiries||0),0);
-  const avgEngagement=completed.length?Math.round(completed.reduce((a,p)=>{const r=p.metrics.reach||1;return a+((p.metrics.likes||0)+(p.metrics.comments||0)+(p.metrics.saves||0))/r*100;},0)/completed.length*10)/10:0;
+  const avgEng=completed.length?Math.round(completed.reduce((a,p)=>{const r=p.metrics.reach||1;return a+((p.metrics.likes||0)+(p.metrics.comments||0)+(p.metrics.saves||0))/r*100;},0)/completed.length*10)/10:0;
   const bestReach=completed.reduce((a,b)=>(b.metrics.reach||0)>(a.metrics?.reach||0)?b:a,completed[0]);
   const bestLikes=completed.reduce((a,b)=>(b.metrics.likes||0)>(a.metrics?.likes||0)?b:a,completed[0]);
-
-  document.getElementById("kpiGrid").innerHTML=[
-    {l:"Alcance total",v:totalReach.toLocaleString(),i:"eye",sub:`${completed.length} publicaciones`},
-    {l:"Likes totales",v:totalLikes.toLocaleString(),i:"heart",sub:`Prom: ${avg(completed.map(p=>p.metrics.likes||0))}`},
-    {l:"Engagement prom.",v:avgEngagement+"%",i:"chart-line",sub:"(likes+com+guard)/alcance"},
-    {l:"Ventas generadas",v:totalSales,i:"shopping-cart",sub:`${totalInquiries} consultas`},
-  ].map(k=>`<div class="kpi-card"><div class="kpi-label"><i class="ti ti-${k.i}"></i>${k.l}</div><div class="kpi-val">${k.v}</div><div class="kpi-sub">${k.sub}</div></div>`).join("");
-
-  document.getElementById("bestGrid").innerHTML=[
-    {l:"Mayor alcance",ico:"eye",post:bestReach,val:(bestReach.metrics?.reach||0).toLocaleString()+" alcance"},
-    {l:"Más likes",ico:"heart",post:bestLikes,val:(bestLikes.metrics?.likes||0).toLocaleString()+" likes"},
-  ].map(b=>`<div class="best-card"><div class="best-label"><i class="ti ti-${b.ico}"></i>${b.l}</div><div class="best-title">${b.post.title}</div><div class="best-meta">${b.post.type} · ${formatDate(b.post.publishedAt)} · ${b.val}</div></div>`).join("");
-
-  renderEvolutionChart(completed);
-  renderTypeChart(completed);
+  document.getElementById("kpiGrid").innerHTML=[{l:"Alcance total",v:totalReach.toLocaleString(),i:"eye",sub:`${completed.length} publicaciones`},{l:"Likes totales",v:totalLikes.toLocaleString(),i:"heart",sub:`Prom: ${avg(completed.map(p=>p.metrics.likes||0))}`},{l:"Engagement prom.",v:avgEng+"%",i:"chart-line",sub:"likes+com+guard / alcance"},{l:"Ventas generadas",v:totalSales,i:"shopping-cart",sub:`${totalInquiries} consultas`}].map(k=>`<div class="kpi-card"><div class="kpi-label"><i class="ti ti-${k.i}"></i>${k.l}</div><div class="kpi-val">${k.v}</div><div class="kpi-sub">${k.sub}</div></div>`).join("");
+  document.getElementById("bestGrid").innerHTML=[{l:"Mayor alcance",ico:"eye",post:bestReach,val:(bestReach.metrics?.reach||0).toLocaleString()+" alcance"},{l:"Más likes",ico:"heart",post:bestLikes,val:(bestLikes.metrics?.likes||0).toLocaleString()+" likes"}].map(b=>`<div class="best-card"><div class="best-label"><i class="ti ti-${b.ico}"></i>${b.l}</div><div class="best-title">${b.post.title}</div><div class="best-meta">${b.post.type} · ${formatDate(b.post.publishedAt)} · ${b.val}</div></div>`).join("");
+  renderEvolutionChart(completed);renderTypeChart(completed);
 }
-
-function renderEvolutionChart(data){
-  const ctx=document.getElementById("evolutionChart").getContext("2d");
-  const labels=data.slice().reverse().map(p=>p.title.length>20?p.title.slice(0,20)+"...":p.title);
-  const values=data.slice().reverse().map(p=>p.metrics[currentMetric]||0);
-  const metricLabels={reach:"Alcance",likes:"Likes",comments:"Comentarios",saves:"Guardados",shares:"Compartidos",inquiries:"Consultas",sales:"Ventas"};
-  if(evolutionChart)evolutionChart.destroy();
-  evolutionChart=new Chart(ctx,{type:"line",data:{labels,datasets:[{label:metricLabels[currentMetric],data:values,borderColor:"#111",backgroundColor:"rgba(17,17,17,.08)",borderWidth:2,pointBackgroundColor:"#111",pointRadius:5,tension:.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grid:{color:"#f3f4f6"}},x:{grid:{display:false}}}}});
-}
-
-function renderTypeChart(data){
-  const ctx=document.getElementById("typeChart").getContext("2d");
-  const types={};
-  data.forEach(p=>{if(!types[p.type])types[p.type]=[];types[p.type].push(p.metrics.reach||0);});
-  const labels=Object.keys(types);
-  const values=labels.map(t=>avg(types[t]));
-  const colors=["rgba(124,58,237,.8)","rgba(37,99,235,.8)","rgba(22,163,74,.8)","rgba(202,138,4,.8)","rgba(220,38,38,.8)"];
-  if(typeChart)typeChart.destroy();
-  typeChart=new Chart(ctx,{type:"bar",data:{labels,datasets:[{label:"Alcance promedio",data:values,backgroundColor:colors.slice(0,labels.length),borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grid:{color:"#f3f4f6"}},x:{grid:{display:false}}}}});
-}
-
-function changeMetric(metric,el){
-  currentMetric=metric;
-  document.querySelectorAll(".metric-pill").forEach(p=>p.classList.remove("active"));
-  el.classList.add("active");
-  const completed=posts.filter(p=>p.metricsCompleted&&p.metrics);
-  if(completed.length)renderEvolutionChart(completed);
-}
+function renderEvolutionChart(data){const ctx=document.getElementById("evolutionChart").getContext("2d");const labels=data.slice().reverse().map(p=>p.title.length>18?p.title.slice(0,18)+"...":p.title);const values=data.slice().reverse().map(p=>p.metrics[currentMetric]||0);const metricLabels={reach:"Alcance",likes:"Likes",comments:"Comentarios",saves:"Guardados",shares:"Compartidos",inquiries:"Consultas",sales:"Ventas"};if(evolutionChart)evolutionChart.destroy();evolutionChart=new Chart(ctx,{type:"line",data:{labels,datasets:[{label:metricLabels[currentMetric],data:values,borderColor:"#111",backgroundColor:"rgba(17,17,17,.08)",borderWidth:2,pointBackgroundColor:"#111",pointRadius:5,tension:.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grid:{color:"#f3f4f6"}},x:{grid:{display:false}}}}});}
+function renderTypeChart(data){const ctx=document.getElementById("typeChart").getContext("2d");const types={};data.forEach(p=>{if(!types[p.type])types[p.type]=[];types[p.type].push(p.metrics.reach||0);});const labels=Object.keys(types);const values=labels.map(t=>avg(types[t]));const colors=["rgba(124,58,237,.8)","rgba(37,99,235,.8)","rgba(22,163,74,.8)","rgba(202,138,4,.8)","rgba(220,38,38,.8)"];if(typeChart)typeChart.destroy();typeChart=new Chart(ctx,{type:"bar",data:{labels,datasets:[{label:"Alcance promedio",data:values,backgroundColor:colors.slice(0,labels.length),borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grid:{color:"#f3f4f6"}},x:{grid:{display:false}}}}});}
+function changeMetric(metric,el){currentMetric=metric;document.querySelectorAll(".metric-pill").forEach(p=>p.classList.remove("active"));el.classList.add("active");const completed=posts.filter(p=>p.metricsCompleted&&p.metrics);if(completed.length)renderEvolutionChart(completed);}
 
 // ── Ideas parser ──
-function parseIdeas(text){const ideas=[];const blocks=text.split(/(?=📌)/g).filter(b=>b.trim().length>30);blocks.forEach((block,idx)=>{const tm=block.match(/📌\s*(.+?)(?:\n)/);const cm=block.match(/💡[^:]*:?\s*([\s\S]+?)(?=✍️|#️⃣|🎯|$)/i);const copy=block.match(/✍️[^:]*:?\s*([\s\S]+?)(?=#️⃣|🎯|$)/i);const hm=block.match(/#️⃣\s*([\s\S]+?)(?=🎯|$)/i);const wm=block.match(/🎯\s*([\s\S]+?)$/i);if(tm){ideas.push({num:idx+1,title:tm[1].trim(),concept:cm?cm[1].trim():"",copy:copy?copy[1].trim():"",hashtags:hm?hm[1].trim().split(/\s+/).filter(h=>h.length>1).map(h=>h.startsWith("#")?h:"#"+h):[],why:wm?wm[1].trim():""});}});return ideas.length>=2?ideas:null;}
+function parseIdeas(text){const ideas=[];const blocks=text.split(/(?=📌)/g).filter(b=>b.trim().length>30);blocks.forEach((block,idx)=>{const tm=block.match(/📌\s*(.+?)(?:\n)/);const cm=block.match(/💡[^:]*:?\s*([\s\S]+?)(?=✍️|#️⃣|🎯|$)/i);const cp=block.match(/✍️[^:]*:?\s*([\s\S]+?)(?=#️⃣|🎯|$)/i);const hm=block.match(/#️⃣\s*([\s\S]+?)(?=🎯|$)/i);const wm=block.match(/🎯\s*([\s\S]+?)$/i);if(tm){ideas.push({num:idx+1,title:tm[1].trim(),concept:cm?cm[1].trim():"",copy:cp?cp[1].trim():"",hashtags:hm?hm[1].trim().split(/\s+/).filter(h=>h.length>1).map(h=>h.startsWith("#")?h:"#"+h):[],why:wm?wm[1].trim():""});}});return ideas.length>=2?ideas:null;}
 function renderIdeas(ideas,meta){const grid=document.getElementById("ideasGrid");grid.style.display="flex";document.getElementById("contentEmpty").style.display="none";grid.innerHTML=ideas.map(idea=>`<div class="idea-card"><div class="idea-header"><div class="idea-num">${idea.num}</div><div class="idea-title">${idea.title}</div></div><div class="idea-body">${idea.concept?`<div><div class="idea-section-label"><i class="ti ti-lightbulb"></i> Concepto</div><div class="idea-section-content">${idea.concept}</div></div>`:""} ${idea.copy?`<div><div class="idea-section-label"><i class="ti ti-pencil"></i> Copy</div><div class="copy-box" id="cb${idea.num}">${idea.copy}<button class="small copy-btn" onclick="copiar('cb${idea.num}',this)">Copiar</button></div></div>`:""} ${idea.hashtags.length>0?`<div><div class="idea-section-label"><i class="ti ti-hash"></i> Hashtags</div><div class="hashtags">${idea.hashtags.map(h=>`<span class="hashtag">${h}</span>`).join("")}</div></div>`:""} ${idea.why?`<div class="why-box"><i class="ti ti-target" style="flex-shrink:0"></i> ${idea.why}</div>`:""}</div><div class="idea-footer"><span class="tag">${meta.type}</span><span class="tag">${meta.goal}</span></div></div>`).join("");}
-function copiar(id,btn){const el=document.getElementById(id);navigator.clipboard.writeText(el.innerText.replace("Copiar","").trim()).then(()=>{btn.textContent="✓ Copiado";setTimeout(()=>btn.textContent="Copiar",2000);});}
+function copiar(id,btn){navigator.clipboard.writeText(document.getElementById(id).innerText.replace("Copiar","").trim()).then(()=>{btn.textContent="✓ Copiado";setTimeout(()=>btn.textContent="Copiar",2000);});}
 
 // ── Perfil ──
 async function loadProfile(){const data=await api("/api/profile");if(data&&data.name){profile=data;profileSaved=true;["name","industry","audience","competitors","voice","goals"].forEach(k=>{const el=document.getElementById("p_"+k);if(el)el.value=data[k]||"";});document.getElementById("headerTitle").textContent=profile.name+" — Redes IA";updateProgress();}}
 async function saveProfile(){profile.name=document.getElementById("p_name").value.trim();profile.industry=document.getElementById("p_industry").value.trim();profile.audience=document.getElementById("p_audience").value.trim();profile.competitors=document.getElementById("p_competitors").value.trim();profile.voice=document.getElementById("p_voice").value.trim();profile.goals=document.getElementById("p_goals").value.trim();if(!profile.name||!profile.industry){alert("Completá al menos el nombre y el rubro.");return;}await api("/api/profile","POST",profile);profileSaved=true;document.getElementById("profileMsg").style.display="flex";document.getElementById("headerTitle").textContent=profile.name+" — Redes IA";updateProgress();setTimeout(()=>goTab("dashboard"),800);}
 
 // ── Dashboard ──
-function updateDashboard(){if(!profileSaved){document.getElementById("dashNotSaved").style.display="block";document.getElementById("dashContent").style.display="none";return;}document.getElementById("dashNotSaved").style.display="none";document.getElementById("dashContent").style.display="block";const p=getProgress();document.getElementById("metricsGrid").innerHTML=[{l:"Publicaciones",v:posts.length,i:"history"},{l:"Con métricas",v:posts.filter(p=>p.metricsCompleted).length,i:"chart-bar"},{l:"Ideas generadas",v:contentLog.length*5,i:"bulb"},{l:"Activación IA",v:p+"%",i:"robot"}].map(c=>`<div class="metric"><div class="metric-label"><i class="ti ti-${c.i}"></i> ${c.l}</div><div class="metric-val">${c.v}</div></div>`).join("");const completed=posts.filter(p=>p.metricsCompleted);document.getElementById("d_metricas").textContent=completed.length>0?`${completed.length} publicaciones analizadas`:"Completá métricas para ver gráficos";document.getElementById("d_analisis").textContent=analysisLog[0]?`Último: ${analysisLog[0].topic}`:"Sin análisis aún";document.getElementById("d_contenido").textContent=`${contentLog.length} sesiones realizadas`;document.getElementById("d_historial").textContent=`${posts.length} publicaciones registradas`;}
+function updateDashboard(){if(!profileSaved){document.getElementById("dashNotSaved").style.display="block";document.getElementById("dashContent").style.display="none";return;}document.getElementById("dashNotSaved").style.display="none";document.getElementById("dashContent").style.display="block";const p=getProgress();document.getElementById("metricsGrid").innerHTML=[{l:"Publicaciones",v:posts.length,i:"history"},{l:"Planificadas",v:calPlanned.length,i:"calendar"},{l:"Con métricas",v:posts.filter(p=>p.metricsCompleted).length,i:"chart-bar"},{l:"Activación IA",v:p+"%",i:"robot"}].map(c=>`<div class="metric"><div class="metric-label"><i class="ti ti-${c.i}"></i> ${c.l}</div><div class="metric-val">${c.v}</div></div>`).join("");document.getElementById("d_calendario").textContent=calPlanned.length>0?`${calPlanned.length} publicaciones planificadas`:"Planificá el mes con IA";document.getElementById("d_metricas").textContent=posts.filter(p=>p.metricsCompleted).length>0?`${posts.filter(p=>p.metricsCompleted).length} publicaciones analizadas`:"Completá métricas para ver gráficos";document.getElementById("d_contenido").textContent=`${contentLog.length} sesiones realizadas`;document.getElementById("d_historial").textContent=`${posts.length} publicaciones registradas`;}
 
 // ── Análisis ──
 async function loadAnalysis(){analysisLog=await api("/api/analysis");if(analysisLog.length>0){showAnalysisResult(analysisLog[0]);refreshAnalysisLog();}}
-async function runAnalysis(){const topic=document.getElementById("analysisTopic").value.trim();if(!topic)return;const btn=document.getElementById("analyzeBtn");btn.disabled=true;btn.textContent="Analizando...";document.getElementById("analysisLoading").style.display="block";document.getElementById("analysisError").style.display="none";document.getElementById("analysisResult").style.display="none";document.getElementById("analysisEmpty").style.display="none";try{const result=await callAI(`Análisis de mercado para: "${topic}"\n\n1. 📈 Tendencias actuales del sector\n2. 🏆 Qué está haciendo la competencia\n3. 💡 Oportunidades concretas para el negocio\n4. ⚠️ Amenazas a considerar\n5. 🎯 Recomendaciones específicas para Instagram`,`Eres estratega de marketing digital experto. ${getCtx()} Respondé en español. Sé específico y práctico.`);const entry={topic,result,date:new Date().toLocaleDateString("es-AR")};await api("/api/analysis","POST",entry);analysisLog.unshift(entry);document.getElementById("analysisTopic").value="";showAnalysisResult(entry);refreshAnalysisLog();updateProgress();}catch(e){document.getElementById("analysisError").textContent=e.message;document.getElementById("analysisError").style.display="block";document.getElementById("analysisEmpty").style.display="block";}finally{document.getElementById("analysisLoading").style.display="none";btn.disabled=false;btn.textContent="Analizar ↗";}}
+async function runAnalysis(){const topic=document.getElementById("analysisTopic").value.trim();if(!topic)return;const btn=document.getElementById("analyzeBtn");btn.disabled=true;btn.textContent="Analizando...";document.getElementById("analysisLoading").style.display="block";document.getElementById("analysisError").style.display="none";document.getElementById("analysisResult").style.display="none";document.getElementById("analysisEmpty").style.display="none";try{const result=await callAI(`Análisis de mercado para: "${topic}"\n\n1. 📈 Tendencias actuales\n2. 🏆 Qué hace la competencia\n3. 💡 Oportunidades para el negocio\n4. ⚠️ Amenazas\n5. 🎯 Recomendaciones para Instagram`,`Eres estratega de marketing digital experto. ${getCtx()} Respondé en español. Sé específico y práctico.`);const entry={topic,result,date:new Date().toLocaleDateString("es-AR")};await api("/api/analysis","POST",entry);analysisLog.unshift(entry);document.getElementById("analysisTopic").value="";showAnalysisResult(entry);refreshAnalysisLog();updateProgress();}catch(e){document.getElementById("analysisError").textContent=e.message;document.getElementById("analysisError").style.display="block";document.getElementById("analysisEmpty").style.display="block";}finally{document.getElementById("analysisLoading").style.display="none";btn.disabled=false;btn.textContent="Analizar ↗";}}
 function showAnalysisResult(entry){document.getElementById("aResultTopic").textContent=entry.topic;document.getElementById("aResultDate").textContent=entry.date;document.getElementById("aResultText").textContent=entry.result;document.getElementById("analysisResult").style.display="block";document.getElementById("analysisEmpty").style.display="none";}
 function refreshAnalysisLog(){const log=analysisLog.slice(1);if(log.length===0){document.getElementById("analysisLog").style.display="none";return;}document.getElementById("analysisLog").style.display="block";document.getElementById("analysisLogList").innerHTML=log.map((a,i)=>`<div class="log-item" onclick="showAnalysisResult(analysisLog[${i+1}])"><i class="ti ti-history"></i><span class="log-item-text">${a.topic}</span><span class="log-item-date">${a.date}</span></div>`).join("");}
 
@@ -451,15 +581,15 @@ async function addPost(){const title=document.getElementById("postTitle").value.
 function renderPosts(){
   document.getElementById("postsEmpty").style.display=posts.length===0?"block":"none";
   document.getElementById("postsList").innerHTML=posts.map(post=>{
-    const now=new Date();const deadline=new Date(post.metricsDeadline);const hrs=hoursLeft(post.metricsDeadline);const isReady=now>=deadline&&!post.metricsCompleted;const isDone=post.metricsCompleted;
-    let statusHtml=isDone?`<div class="post-status done"><i class="ti ti-check"></i> Métricas completas</div>`:isReady?`<div class="post-status ready"><i class="ti ti-clock"></i> ¡72hs cumplidas! Ya podés cargar las métricas</div>`:`<div class="post-status pending"><i class="ti ti-clock"></i> Métricas disponibles en ${hrs}hs</div>`;
-    const metricsHtml=isDone?`<div class="post-metrics-grid"><div class="post-metric"><div class="post-metric-val">${post.metrics?.reach||0}</div><div class="post-metric-label">Alcance</div></div><div class="post-metric"><div class="post-metric-val">${post.metrics?.likes||0}</div><div class="post-metric-label">Likes</div></div><div class="post-metric"><div class="post-metric-val">${post.metrics?.comments||0}</div><div class="post-metric-label">Comentarios</div></div><div class="post-metric"><div class="post-metric-val">${post.metrics?.saves||0}</div><div class="post-metric-label">Guardados</div></div><div class="post-metric"><div class="post-metric-val">${post.metrics?.shares||0}</div><div class="post-metric-label">Compartidos</div></div><div class="post-metric"><div class="post-metric-val">${post.metrics?.inquiries||0}</div><div class="post-metric-label">Consultas</div></div><div class="post-metric"><div class="post-metric-val">${post.metrics?.sales||0}</div><div class="post-metric-label">Ventas</div></div></div>`:isReady?`<div class="metrics-form"><div class="metrics-form-title"><i class="ti ti-chart-bar"></i> Completar métricas (72hs)</div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin-bottom:12px"><div><label>Alcance</label><input type="number" id="m_reach_${post._id}" placeholder="0" min="0"></div><div><label>Likes</label><input type="number" id="m_likes_${post._id}" placeholder="0" min="0"></div><div><label>Comentarios</label><input type="number" id="m_comments_${post._id}" placeholder="0" min="0"></div><div><label>Guardados</label><input type="number" id="m_saves_${post._id}" placeholder="0" min="0"></div><div><label>Compartidos</label><input type="number" id="m_shares_${post._id}" placeholder="0" min="0"></div><div><label>Consultas</label><input type="number" id="m_inquiries_${post._id}" placeholder="0" min="0"></div><div><label>Ventas</label><input type="number" id="m_sales_${post._id}" placeholder="0" min="0"></div></div><button class="primary" onclick="saveMetrics('${post._id}')">Guardar métricas ↗</button></div>`:"";
+    const now=new Date();const isReady=now>=new Date(post.metricsDeadline)&&!post.metricsCompleted;const isDone=post.metricsCompleted;const hrs=hoursLeft(post.metricsDeadline);
+    const statusHtml=isDone?`<div class="post-status done"><i class="ti ti-check"></i> Métricas completas</div>`:isReady?`<div class="post-status ready"><i class="ti ti-clock"></i> ¡72hs cumplidas! Ya podés cargar las métricas</div>`:`<div class="post-status pending"><i class="ti ti-clock"></i> Métricas disponibles en ${hrs}hs</div>`;
+    const metricsHtml=isDone?`<div class="post-metrics-grid"><div class="post-metric"><div class="post-metric-val">${post.metrics?.reach||0}</div><div class="post-metric-label">Alcance</div></div><div class="post-metric"><div class="post-metric-val">${post.metrics?.likes||0}</div><div class="post-metric-label">Likes</div></div><div class="post-metric"><div class="post-metric-val">${post.metrics?.comments||0}</div><div class="post-metric-label">Comentarios</div></div><div class="post-metric"><div class="post-metric-val">${post.metrics?.saves||0}</div><div class="post-metric-label">Guardados</div></div><div class="post-metric"><div class="post-metric-val">${post.metrics?.shares||0}</div><div class="post-metric-label">Compartidos</div></div><div class="post-metric"><div class="post-metric-val">${post.metrics?.inquiries||0}</div><div class="post-metric-label">Consultas</div></div><div class="post-metric"><div class="post-metric-val">${post.metrics?.sales||0}</div><div class="post-metric-label">Ventas</div></div></div>`:isReady?`<div class="metrics-form"><div class="metrics-form-title"><i class="ti ti-chart-bar"></i> Completar métricas (72hs)</div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(95px,1fr));gap:8px;margin-bottom:12px"><div><label>Alcance</label><input type="number" id="m_reach_${post._id}" placeholder="0" min="0"></div><div><label>Likes</label><input type="number" id="m_likes_${post._id}" placeholder="0" min="0"></div><div><label>Comentarios</label><input type="number" id="m_comments_${post._id}" placeholder="0" min="0"></div><div><label>Guardados</label><input type="number" id="m_saves_${post._id}" placeholder="0" min="0"></div><div><label>Compartidos</label><input type="number" id="m_shares_${post._id}" placeholder="0" min="0"></div><div><label>Consultas</label><input type="number" id="m_inquiries_${post._id}" placeholder="0" min="0"></div><div><label>Ventas</label><input type="number" id="m_sales_${post._id}" placeholder="0" min="0"></div></div><button class="primary" onclick="saveMetrics('${post._id}')">Guardar métricas ↗</button></div>`:"";
     const aiHtml=isDone?(post.aiAnalysis?`<div class="post-ai-analysis"><div class="post-ai-analysis-title"><i class="ti ti-robot"></i> Análisis de Claude</div>${post.aiAnalysis}</div>`:`<div style="margin-top:12px"><button class="btn-purple" onclick="analyzePost('${post._id}')"><i class="ti ti-robot"></i> Analizar con IA (opcional)</button></div>`):"";
-    return `<div class="post-card"><div class="post-card-header"><span class="post-type-badge ${typeBadgeClass(post.type)}">${post.type}</span><span class="post-title">${post.title}</span><span class="post-date">${formatDate(post.publishedAt)}</span><button class="small" onclick="deletePost('${post._id}')" style="margin-left:8px;flex-shrink:0"><i class="ti ti-trash"></i></button></div><div class="post-card-body">${statusHtml}${post.notes?`<p style="font-size:13px;color:var(--text2);margin-bottom:12px"><i class="ti ti-notes" style="margin-right:4px"></i>${post.notes}</p>`:""}${post.link?`<p style="font-size:12px;margin-bottom:12px"><a href="${post.link}" target="_blank" style="color:var(--blue)"><i class="ti ti-external-link"></i> Ver publicación</a></p>`:""}${metricsHtml}${aiHtml}</div></div>`;
+    return `<div class="post-card"><div class="post-card-header"><span class="post-type-badge ${typeBadgeClass(post.type)}">${post.type}</span><span class="post-title">${post.title}</span><span class="post-date">${formatDate(post.publishedAt)}</span><button class="small" onclick="deletePost('${post._id}')" style="flex-shrink:0"><i class="ti ti-trash"></i></button></div><div class="post-card-body">${statusHtml}${post.notes?`<p style="font-size:13px;color:var(--text2);margin-bottom:12px">${post.notes}</p>`:""}${post.link?`<p style="font-size:12px;margin-bottom:12px"><a href="${post.link}" target="_blank" style="color:var(--blue)"><i class="ti ti-external-link"></i> Ver publicación</a></p>`:""}${metricsHtml}${aiHtml}</div></div>`;
   }).join("");
 }
 async function saveMetrics(id){const metrics={reach:parseInt(document.getElementById(`m_reach_${id}`)?.value)||0,likes:parseInt(document.getElementById(`m_likes_${id}`)?.value)||0,comments:parseInt(document.getElementById(`m_comments_${id}`)?.value)||0,saves:parseInt(document.getElementById(`m_saves_${id}`)?.value)||0,shares:parseInt(document.getElementById(`m_shares_${id}`)?.value)||0,inquiries:parseInt(document.getElementById(`m_inquiries_${id}`)?.value)||0,sales:parseInt(document.getElementById(`m_sales_${id}`)?.value)||0};await api(`/api/posts/${id}`,"PUT",{metrics,metricsCompleted:true});await loadPosts();}
-async function analyzePost(id){const post=posts.find(p=>String(p._id)===id);if(!post)return;const btn=document.querySelector(`[onclick="analyzePost('${id}')"]`);if(btn){btn.disabled=true;btn.textContent="Analizando...";}try{const m=post.metrics;const result=await callAI(`Analizá esta publicación de Instagram:\n\nTipo: ${post.type}\nTítulo: ${post.title}\nNotas del CM: ${post.notes||"ninguna"}\n\nMétricas (72hs):\n- Alcance: ${m.reach}\n- Likes: ${m.likes}\n- Comentarios: ${m.comments}\n- Guardados: ${m.saves}\n- Compartidos: ${m.shares}\n- Consultas: ${m.inquiries}\n- Ventas: ${m.sales}\n\nResponde:\n1. ¿Funcionó bien o mal? ¿Por qué?\n2. ¿Qué factores influyeron?\n3. ¿Qué mejorar en la próxima similar?\n4. ¿Vale la pena repetir este formato?`,`Eres experto en marketing digital e Instagram. ${getCtx()} Respondé en español de forma específica y accionable.`);await api(`/api/posts/${id}`,"PUT",{aiAnalysis:result});await loadPosts();}catch(e){alert("Error: "+e.message);if(btn){btn.disabled=false;btn.innerHTML='<i class="ti ti-robot"></i> Analizar con IA (opcional)';}}}
+async function analyzePost(id){const post=posts.find(p=>String(p._id)===id);if(!post)return;const btn=document.querySelector(`[onclick="analyzePost('${id}')"]`);if(btn){btn.disabled=true;btn.textContent="Analizando...";}try{const m=post.metrics;const result=await callAI(`Analizá esta publicación:\nTipo: ${post.type}\nTítulo: ${post.title}\nNotas: ${post.notes||"ninguna"}\nMétricas 72hs:\n- Alcance: ${m.reach}\n- Likes: ${m.likes}\n- Comentarios: ${m.comments}\n- Guardados: ${m.saves}\n- Compartidos: ${m.shares}\n- Consultas: ${m.inquiries}\n- Ventas: ${m.sales}\n\nResponde:\n1. ¿Funcionó bien o mal? ¿Por qué?\n2. ¿Qué factores influyeron?\n3. ¿Qué mejorar la próxima vez?\n4. ¿Vale la pena repetir este formato?`,`Eres experto en Instagram. ${getCtx()} Respondé en español, específico y accionable.`);await api(`/api/posts/${id}`,"PUT",{aiAnalysis:result});await loadPosts();}catch(e){alert("Error: "+e.message);if(btn){btn.disabled=false;btn.innerHTML='<i class="ti ti-robot"></i> Analizar con IA (opcional)';}}}
 async function deletePost(id){if(!confirm("¿Eliminar esta publicación?"))return;await api(`/api/posts/${id}`,"DELETE");await loadPosts();}
 
 // ── Aprendizajes ──
@@ -469,10 +599,14 @@ async function removeWin(id){await api("/api/wins/"+id,"DELETE");await loadWins(
 function refreshWins(){document.getElementById("winsEmpty").style.display=wins.length===0?"block":"none";document.getElementById("winsList").innerHTML=wins.map(w=>`<div class="win-card"><div class="win-info"><div class="win-desc">${w.desc}</div>${w.metric?`<div class="win-metric"><i class="ti ti-trending-up"></i> ${w.metric}</div>`:""}<div class="win-date">${w.date}</div></div><button class="small" onclick="removeWin('${w._id}')"><i class="ti ti-trash"></i></button></div>`).join("");}
 
 // ── Roadmap ──
-function updateRoadmap(){const p=getProgress();document.getElementById("rmPct").textContent=p+"% activo";document.getElementById("rmFill").style.width=p+"%";const steps=[{ph:"Fase 1",t:"Configuración del perfil",d:"Identidad, audiencia y objetivos definidos.",done:profileSaved,ico:"building-store",at:"perfil",al:"Completar perfil ↗"},{ph:"Fase 2",t:"Análisis continuo de mercado",d:"Monitorear tendencias y competencia con IA.",done:analysisLog.length>=3,partial:analysisLog.length>0,ico:"chart-line",at:"analisis",al:"Ir a análisis ↗",note:`${analysisLog.length} análisis`},{ph:"Fase 3",t:"Generación de contenido con IA",d:"Ideas en tarjetas visuales listas para usar.",done:contentLog.length>=5,partial:contentLog.length>0,ico:"bulb",at:"contenido",al:"Generar contenido ↗",note:`${contentLog.length} sesiones`},{ph:"Fase 4",t:"Historial de publicaciones",d:"Registrar publicaciones con métricas a las 72hs.",done:posts.filter(p=>p.metricsCompleted).length>=3,partial:posts.length>0,ico:"history",at:"historial",al:"Ir al historial ↗",note:`${posts.length} publicaciones, ${posts.filter(p=>p.metricsCompleted).length} con métricas`},{ph:"Fase 5",t:"Panel de métricas y gráficos",d:"Dashboard visual con evolución y comparación de rendimiento.",done:posts.filter(p=>p.metricsCompleted).length>=3,partial:posts.filter(p=>p.metricsCompleted).length>0,ico:"chart-bar",at:"metricas",al:"Ver métricas ↗",note:posts.filter(p=>p.metricsCompleted).length>=3?"✓ Dashboard activo con datos suficientes":`Necesitás ${3-posts.filter(p=>p.metricsCompleted).length} publicaciones más con métricas`},{ph:"Fase 6",t:"Retroalimentación y aprendizaje",d:"La IA mejora con el tiempo.",done:wins.length>=5,partial:wins.length>0,ico:"star",at:"aprendizajes",al:"Agregar aprendizajes ↗",note:`${wins.length} aprendizajes`},{ph:"Fase 7",t:"Base de datos permanente",d:"Todo guardado permanentemente.",done:true,ico:"database",note:"✓ MongoDB Atlas conectado"},{ph:"Fase 8",t:"Login y acceso privado",d:"Solo tu equipo puede acceder.",done:true,ico:"lock",note:"✓ Sistema de login activo"},{ph:"Fase 9",t:"Calendario de contenido",d:"Planificación visual del mes completo.",done:false,upcoming:true,ico:"calendar",note:"Próxima mejora planificada."},{ph:"Fase 10",t:"Conexión a Instagram API",d:"Métricas automáticas y publicación programada.",done:false,upcoming:true,ico:"brand-instagram",note:"Requiere cuenta Meta Business verificada."}];document.getElementById("roadmapPhases").innerHTML=steps.map(s=>{const cc=s.done?"done":s.partial?"partial":"";const ci=s.done?"✓":`<i class="ti ti-${s.ico}"></i>`;const bt=s.done?"Completado":(s.partial&&!s.done)?"En progreso":s.upcoming?"Próximamente":"Pendiente";const bc=s.done?"done":(s.partial&&!s.done)?"partial":s.upcoming?"soon":"pending";const ab=s.at&&!s.done?`<button class="primary" onclick="goTab('${s.at}')" style="font-size:13px;padding:5px 12px;margin-top:4px">${s.al}</button>`:"";return `<div class="card" style="margin-bottom:10px;${s.upcoming?"opacity:.6":""}"><div class="phase"><div class="phase-circle ${cc}">${ci}</div><div class="phase-info"><div class="phase-meta"><span class="phase-lbl">${s.ph}</span><span class="badge ${bc}">${bt}</span></div><div class="phase-title">${s.t}</div><div class="phase-desc">${s.d}</div>${s.note?`<div class="phase-note">${s.note}</div>`:""}${ab}</div></div></div>`;}).join("");}
+function updateRoadmap(){const p=getProgress();document.getElementById("rmPct").textContent=p+"% activo";document.getElementById("rmFill").style.width=p+"%";const steps=[{ph:"Fase 1",t:"Configuración del perfil",d:"Identidad, audiencia y objetivos definidos.",done:profileSaved,ico:"building-store",at:"perfil",al:"Completar perfil ↗"},{ph:"Fase 2",t:"Análisis continuo de mercado",d:"Monitorear tendencias y competencia con IA.",done:analysisLog.length>=3,partial:analysisLog.length>0,ico:"chart-line",at:"analisis",al:"Ir a análisis ↗",note:`${analysisLog.length} análisis`},{ph:"Fase 3",t:"Generación de contenido con IA",d:"Ideas en tarjetas visuales listas para usar.",done:contentLog.length>=5,partial:contentLog.length>0,ico:"bulb",at:"contenido",al:"Generar contenido ↗",note:`${contentLog.length} sesiones`},{ph:"Fase 4",t:"Historial de publicaciones",d:"Registrar publicaciones con métricas a las 72hs.",done:posts.filter(p=>p.metricsCompleted).length>=3,partial:posts.length>0,ico:"history",at:"historial",al:"Ir al historial ↗",note:`${posts.length} publicaciones, ${posts.filter(p=>p.metricsCompleted).length} con métricas`},{ph:"Fase 5",t:"Panel de métricas y gráficos",d:"Dashboard visual con evolución y comparación.",done:posts.filter(p=>p.metricsCompleted).length>=3,partial:posts.filter(p=>p.metricsCompleted).length>0,ico:"chart-bar",at:"metricas",al:"Ver métricas ↗",note:`${posts.filter(p=>p.metricsCompleted).length} publicaciones con datos`},{ph:"Fase 6",t:"Calendario de contenido",d:"Planificación mensual con sugerencias de IA.",done:calPlanned.length>=4,partial:calPlanned.length>0,ico:"calendar",at:"calendario",al:"Ir al calendario ↗",note:`${calPlanned.length} publicaciones planificadas`},{ph:"Fase 7",t:"Retroalimentación y aprendizaje",d:"La IA mejora con el tiempo.",done:wins.length>=5,partial:wins.length>0,ico:"star",at:"aprendizajes",al:"Agregar aprendizajes ↗",note:`${wins.length} aprendizajes`},{ph:"Fase 8",t:"Base de datos permanente",d:"Todo guardado permanentemente.",done:true,ico:"database",note:"✓ MongoDB Atlas conectado"},{ph:"Fase 9",t:"Login y acceso privado",d:"Solo tu equipo puede acceder.",done:true,ico:"lock",note:"✓ Sistema de login activo"},{ph:"Fase 10",t:"Modo CM vs modo vos",d:"Dos niveles de acceso con vistas diferenciadas.",done:false,upcoming:true,ico:"users",note:"Próxima mejora planificada."},{ph:"Fase 11",t:"Conexión a Instagram API",d:"Métricas automáticas y publicación programada.",done:false,upcoming:true,ico:"brand-instagram",note:"Requiere cuenta Meta Business verificada."}];document.getElementById("roadmapPhases").innerHTML=steps.map(s=>{const cc=s.done?"done":s.partial?"partial":"";const ci=s.done?"✓":`<i class="ti ti-${s.ico}"></i>`;const bt=s.done?"Completado":(s.partial&&!s.done)?"En progreso":s.upcoming?"Próximamente":"Pendiente";const bc=s.done?"done":(s.partial&&!s.done)?"partial":s.upcoming?"soon":"pending";const ab=s.at&&!s.done?`<button class="primary" onclick="goTab('${s.at}')" style="font-size:13px;padding:5px 12px;margin-top:4px">${s.al}</button>`:"";return `<div class="card" style="margin-bottom:10px;${s.upcoming?"opacity:.6":""}"><div class="phase"><div class="phase-circle ${cc}">${ci}</div><div class="phase-info"><div class="phase-meta"><span class="phase-lbl">${s.ph}</span><span class="badge ${bc}">${bt}</span></div><div class="phase-title">${s.t}</div><div class="phase-desc">${s.d}</div>${s.note?`<div class="phase-note">${s.note}</div>`:""}${ab}</div></div></div>`;}).join("");}
 
 // ── Init ──
-async function init(){await loadProfile();await loadAnalysis();await loadContent();await loadPosts();await loadWins();updateRoadmap();}
+async function init(){
+  const stored=localStorage.getItem("calPlanned");
+  if(stored)calPlanned=JSON.parse(stored);
+  await loadProfile();await loadAnalysis();await loadContent();await loadPosts();await loadWins();updateRoadmap();
+}
 </script>
 </body>
 </html>
