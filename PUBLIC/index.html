@@ -434,16 +434,14 @@ function changeMonth(dir){calMonth+=dir;if(calMonth>11){calMonth=0;calYear++;}if
 
 function renderCalendar(){
   const months=["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
-  document.getElementById("calMonthLabel").textContent=`${months[calMonth]} ${calYear}`;
+  document.getElementById("calMonthLabel").textContent=months[calMonth]+" "+calYear;
   const grid=document.getElementById("calGrid");
-  const days=["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"];
+  const dayNames=["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"];
   const first=new Date(calYear,calMonth,1).getDay();
   const total=new Date(calYear,calMonth+1,0).getDate();
   const prevTotal=new Date(calYear,calMonth,0).getDate();
-  const today=new Date();
-  const todayStr=toDateStr(today);
+  const todayStr=toDateStr(new Date());
 
-  // Mapas por fecha
   const publishedMap={};
   posts.forEach(p=>{const d=toDateStr(p.publishedAt);if(!publishedMap[d])publishedMap[d]=[];publishedMap[d].push(p);});
   const plannedMap={};
@@ -451,40 +449,142 @@ function renderCalendar(){
   const sugMap={};
   suggestions.forEach(s=>{if(s.date){if(!sugMap[s.date])sugMap[s.date]=[];sugMap[s.date].push(s);}});
 
-  let html=days.map(d=>`<div class="cal-day-name">${d}</div>`).join("");
-  for(let i=0;i<first;i++){const day=prevTotal-first+i+1;html+=`<div class="cal-day other-month"><div class="cal-day-num">${day}</div></div>`;}
+  // Limpiar grid y rearmar
+  grid.innerHTML="";
+
+  // Nombres de días
+  dayNames.forEach(d=>{
+    const el=document.createElement("div");
+    el.className="cal-day-name";
+    el.textContent=d;
+    grid.appendChild(el);
+  });
+
+  // Días del mes anterior
+  for(let i=0;i<first;i++){
+    const el=document.createElement("div");
+    el.className="cal-day other-month";
+    el.innerHTML=`<div class="cal-day-num">${prevTotal-first+i+1}</div>`;
+    grid.appendChild(el);
+  }
+
+  // Días del mes actual
   for(let d=1;d<=total;d++){
-    const dateStr=`${calYear}-${String(calMonth+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+    const dateStr=calYear+"-"+String(calMonth+1).padStart(2,"0")+"-"+String(d).padStart(2,"0");
     const isToday=dateStr===todayStr;
     const pub=publishedMap[dateStr]||[];
     const plan=plannedMap[dateStr]||[];
     const sug=sugMap[dateStr]||[];
-    const isPast=new Date(dateStr)<new Date(todayStr);
-    let events=pub.map(p=>`<div class="cal-event published" title="${p.title}">${p.type.slice(0,1)} ${p.title.slice(0,14)}${p.title.length>14?"...":""}</div>`).join("");
-    events+=plan.map(p=>`<div class="cal-event planned" onclick="openPlannedModal('${dateStr}','${p.id}')" title="${p.title}">${p.type.slice(0,1)} ${p.title.slice(0,14)}${p.title.length>14?"...":""}</div>`).join("");
-    events+=sug.map(s=>`<div class="cal-event suggested" onclick="openSuggestedModal('${dateStr}','${encodeURIComponent(s.type||"")}','${encodeURIComponent(s.reason||"")}')" title="${s.reason||""}">${(s.type||"IA").slice(0,1)} IA: ${(s.type||"").slice(0,10)}</div>`).join("");
-    html+=`<div class="cal-day${isToday?" today":""}" onclick="openDayModal('${dateStr}',false)"><div class="cal-day-num">${d}</div>${events}</div>`;
+
+    const el=document.createElement("div");
+    el.className="cal-day"+(isToday?" today":"");
+    el.dataset.date=dateStr;
+
+    let inner=`<div class="cal-day-num">${d}</div>`;
+    pub.forEach(p=>{inner+=`<div class="cal-event published">${p.type.slice(0,1)} ${p.title.slice(0,14)}</div>`;});
+    plan.forEach(p=>{inner+=`<div class="cal-event planned">${p.type.slice(0,1)} ${p.title.slice(0,14)}</div>`;});
+    sug.forEach(s=>{inner+=`<div class="cal-event suggested">IA: ${(s.type||"").slice(0,10)}</div>`;});
+    el.innerHTML=inner;
+
+    // Event listener directo en el elemento
+    el.addEventListener("click", function(){
+      openDayModal(this.dataset.date);
+    });
+
+    grid.appendChild(el);
   }
+
+  // Días del mes siguiente
   const remaining=(7-((first+total)%7))%7;
-  for(let i=1;i<=remaining;i++)html+=`<div class="cal-day other-month"><div class="cal-day-num">${i}</div></div>`;
-  grid.innerHTML=html;
+  for(let i=1;i<=remaining;i++){
+    const el=document.createElement("div");
+    el.className="cal-day other-month";
+    el.innerHTML=`<div class="cal-day-num">${i}</div>`;
+    grid.appendChild(el);
+  }
 }
 
-function openDayModal(dateStr,isPast){
+function openDayModal(dateStr){
   currentModalDate=dateStr;
   const d=new Date(dateStr+"T12:00:00");
   const label=d.toLocaleDateString("es-AR",{weekday:"long",day:"numeric",month:"long"});
   document.getElementById("modalTitle").textContent=label;
-  const existing=calPlanned.filter(p=>p.date===dateStr);
+
   const pubToday=posts.filter(p=>toDateStr(p.publishedAt)===dateStr);
+  const planToday=calPlanned.filter(p=>p.date===dateStr);
   let html="";
-  if(pubToday.length>0){html+=`<div style="margin-bottom:16px"><div class="section-title">Publicado este día</div>${pubToday.map(p=>`<div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px"><span class="post-type-badge ${typeBadgeClass(p.type)}">${p.type}</span>${p.title}</div>`).join("")}</div>`;}
-  if(existing.length>0){html+=`<div style="margin-bottom:16px"><div class="section-title">Planificado</div>${existing.map(p=>`<div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px"><span class="post-type-badge ${typeBadgeClass(p.type)}">${p.type}</span><span style="flex:1">${p.title}</span><button class="small" onclick="deletePlanned('${p.id}')"><i class="ti ti-trash"></i></button></div>`).join("")}</div>`;}
+
+  // Publicaciones registradas
+  if(pubToday.length>0){
+    html+=`<div style="margin-bottom:14px"><div class="section-title">Publicado este día</div>`;
+    pubToday.forEach(p=>{
+      html+=`<div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.6rem .75rem;margin-bottom:6px;font-size:13px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+          <span class="post-type-badge ${typeBadgeClass(p.type)}">${p.type}</span>
+          <span style="font-weight:600">${p.title}</span>
+        </div>
+        <div style="font-size:12px;color:${p.metricsCompleted?"var(--green)":"var(--yellow)"}">
+          ${p.metricsCompleted?"✓ Métricas completas":"⏳ Métricas pendientes"}
+        </div>
+      </div>`;
+    });
+    html+=`</div>`;
+  }
+
+  // Planificadas
+  if(planToday.length>0){
+    html+=`<div style="margin-bottom:14px"><div class="section-title">Planificado</div>`;
+    planToday.forEach(p=>{
+      html+=`<div style="background:var(--blue-bg);border:1px solid #bfdbfe;border-radius:var(--radius-sm);padding:.75rem;margin-bottom:6px">
+        <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:6px">
+          <span class="post-type-badge carrusel">${p.type}</span>
+          <div style="flex:1">
+            <div style="font-weight:600;font-size:13px">${p.title}</div>
+            <div style="font-size:12px;color:var(--blue)">Objetivo: ${p.goal||"-"}</div>
+          </div>
+          <button onclick="deletePlanned('${p._id}')" style="padding:3px 6px;font-size:11px;flex-shrink:0"><i class="ti ti-trash"></i></button>
+        </div>
+        ${p.notes?`<div style="font-size:12px;color:#1e40af;background:#fff;border-radius:4px;padding:.5rem .6rem;border:1px solid #bfdbfe"><strong>Notas:</strong> ${p.notes}</div>`:""}
+      </div>`;
+    });
+    html+=`</div>`;
+  }
+
+  // Formulario nuevo
+  html+=`<div style="border-top:${(pubToday.length||planToday.length)?"1px solid var(--border);padding-top:14px":""};margin-top:4px">
+    <div class="section-title">${planToday.length?"Agregar otra publicación":"Nueva publicación planificada"}</div>
+    <div class="field" style="margin-top:8px">
+      <label>Título / idea</label>
+      <input id="planTitle" placeholder="Ej: Reel de temporada de verano">
+    </div>
+    <div class="field-grid">
+      <div><label>Tipo</label>
+        <select id="planType">
+          <option>Reels</option><option>Carrusel</option><option>Post estático</option><option>Stories</option>
+        </select>
+      </div>
+      <div><label>Objetivo</label>
+        <select id="planGoal">
+          <option value="ventas">Ventas</option>
+          <option value="engagement">Engagement</option>
+          <option value="awareness">Awareness</option>
+          <option value="fidelización">Fidelización</option>
+        </select>
+      </div>
+    </div>
+    <div class="field">
+      <label>Notas del CM (opcional)</label>
+      <textarea id="planNotes" style="min-height:65px" placeholder="Horario, referencias, ideas de contenido..."></textarea>
+    </div>
+    <button class="primary" style="width:100%;margin-top:4px" id="savePlanBtn">Agregar al calendario ↗</button>
+  </div>`;
+
   document.getElementById("modalContent").innerHTML=html;
   document.getElementById("calModal").classList.add("open");
-  // Event listener para el botón guardar
-  const saveBtn=document.getElementById("savePlanBtn");
-  if(saveBtn) saveBtn.addEventListener("click",function(){savePlanned(currentModalDate);});
+
+  document.getElementById("savePlanBtn").addEventListener("click",function(){
+    savePlanned(currentModalDate);
+  });
 }
 
 function openPlannedModal(dateStr,id){openDayModal(dateStr,false);}
