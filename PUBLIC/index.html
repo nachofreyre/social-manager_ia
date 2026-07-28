@@ -402,6 +402,7 @@
 
 <script>
 let appPassword="",profileSaved=false,profile={},analysisLog=[],contentLog=[],wins=[],posts=[],calPlanned=[];
+let currentModalDate="";
 let evolutionChart=null,typeChart=null,currentMetric="reach";
 let calYear=new Date().getFullYear(),calMonth=new Date().getMonth();
 let suggestions=[];
@@ -470,6 +471,7 @@ function renderCalendar(){
 }
 
 function openDayModal(dateStr,isPast){
+  currentModalDate=dateStr;
   const d=new Date(dateStr+"T12:00:00");
   const label=d.toLocaleDateString("es-AR",{weekday:"long",day:"numeric",month:"long"});
   document.getElementById("modalTitle").textContent=label;
@@ -478,19 +480,37 @@ function openDayModal(dateStr,isPast){
   let html="";
   if(pubToday.length>0){html+=`<div style="margin-bottom:16px"><div class="section-title">Publicado este día</div>${pubToday.map(p=>`<div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px"><span class="post-type-badge ${typeBadgeClass(p.type)}">${p.type}</span>${p.title}</div>`).join("")}</div>`;}
   if(existing.length>0){html+=`<div style="margin-bottom:16px"><div class="section-title">Planificado</div>${existing.map(p=>`<div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px"><span class="post-type-badge ${typeBadgeClass(p.type)}">${p.type}</span><span style="flex:1">${p.title}</span><button class="small" onclick="deletePlanned('${p.id}')"><i class="ti ti-trash"></i></button></div>`).join("")}</div>`;}
-  if(true){html+=`<div class="section-title">Planificar nueva publicación</div><div class="field" style="margin-top:10px"><label>Título / idea</label><input id="planTitle" placeholder="Ej: Reel de temporada de verano"></div><div class="field"><label>Tipo</label><select id="planType"><option>Reels</option><option>Carrusel</option><option>Post estático</option><option>Stories</option></select></div><div class="field"><label>Objetivo</label><select id="planGoal"><option value="ventas">Ventas</option><option value="engagement">Engagement</option><option value="awareness">Awareness</option><option value="fidelización">Fidelización</option></select></div><div class="field"><label>Notas (opcional)</label><textarea id="planNotes" style="min-height:50px" placeholder="Ideas, referencias, contexto..."></textarea></div><button class="primary" style="width:100%" onclick="savePlanned('${dateStr}')">Agregar al calendario ↗</button>`;}
   document.getElementById("modalContent").innerHTML=html;
   document.getElementById("calModal").classList.add("open");
+  // Event listener para el botón guardar
+  const saveBtn=document.getElementById("savePlanBtn");
+  if(saveBtn) saveBtn.addEventListener("click",function(){savePlanned(currentModalDate);});
 }
 
 function openPlannedModal(dateStr,id){openDayModal(dateStr,false);}
 
 function openSuggestedModal(dateStr,type,reason){
+  currentModalDate=dateStr;
   const d=new Date(dateStr+"T12:00:00");
   const label=d.toLocaleDateString("es-AR",{weekday:"long",day:"numeric",month:"long"});
   document.getElementById("modalTitle").textContent="Sugerencia IA — "+label;
-  document.getElementById("modalContent").innerHTML=`<div class="suggestion-card" style="margin-bottom:16px"><div class="suggestion-day"><i class="ti ti-robot"></i> Sugerencia de Claude</div><div class="suggestion-reason">${decodeURIComponent(reason)}</div><span class="suggestion-type">${decodeURIComponent(type)}</span></div><div class="field"><label>Título / idea</label><input id="planTitle" value="${decodeURIComponent(type)} — " placeholder="Completá el título..."></div><div class="field"><label>Tipo</label><select id="planType"><option ${decodeURIComponent(type)==="Reels"?"selected":""}>Reels</option><option ${decodeURIComponent(type)==="Carrusel"?"selected":""}>Carrusel</option><option ${decodeURIComponent(type)==="Post estático"?"selected":""}>Post estático</option><option>Stories</option></select></div><div class="field"><label>Objetivo</label><select id="planGoal"><option value="ventas">Ventas</option><option value="engagement">Engagement</option><option value="awareness">Awareness</option><option value="fidelización">Fidelización</option></select></div><div class="field"><label>Notas</label><textarea id="planNotes" style="min-height:50px" placeholder="Ideas adicionales..."></textarea></div><button class="primary" style="width:100%" onclick="savePlanned('${dateStr}')">Agregar al calendario ↗</button>`;
+  document.getElementById("modalContent").innerHTML=`
+    <div style="background:var(--green-bg);border:1px solid #86efac;border-radius:var(--radius-sm);padding:.875rem 1rem;margin-bottom:16px">
+      <div style="font-weight:700;font-size:14px;color:var(--green);margin-bottom:4px"><i class="ti ti-robot"></i> Sugerencia de Claude</div>
+      <div style="font-size:13px;color:#166534;line-height:1.5">${decodeURIComponent(reason)}</div>
+      <span style="display:inline-block;background:#fff;color:var(--green);border-radius:20px;padding:2px 8px;font-size:11px;font-weight:600;margin-top:6px">${decodeURIComponent(type)}</span>
+    </div>
+    <div class="field"><label>Título / idea</label><input id="planTitle" placeholder="Completá el título..."></div>
+    <div class="field-grid">
+      <div><label>Tipo</label><select id="planType"><option>Reels</option><option>Carrusel</option><option>Post estático</option><option>Stories</option></select></div>
+      <div><label>Objetivo</label><select id="planGoal"><option value="ventas">Ventas</option><option value="engagement">Engagement</option><option value="awareness">Awareness</option><option value="fidelización">Fidelización</option></select></div>
+    </div>
+    <div class="field"><label>Notas</label><textarea id="planNotes" style="min-height:60px" placeholder="Ideas adicionales..."></textarea></div>
+    <button class="primary" style="width:100%" id="savePlanBtn">Agregar al calendario ↗</button>
+  `;
   document.getElementById("calModal").classList.add("open");
+  const btn=document.getElementById("savePlanBtn");
+  if(btn) btn.addEventListener("click",()=>savePlanned(currentModalDate));
 }
 
 function closeModal(){document.getElementById("calModal").classList.remove("open");}
