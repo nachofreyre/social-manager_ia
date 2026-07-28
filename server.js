@@ -144,6 +144,26 @@ app.delete("/api/posts/:id", async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// ── Planificadas ──
+app.get("/api/planned", async (req, res) => {
+  try {
+    const list = await db.collection("planned").find().sort({ date: 1 }).toArray();
+    res.json(list);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.post("/api/planned", async (req, res) => {
+  try {
+    const result = await db.collection("planned").insertOne({ ...req.body, createdAt: new Date() });
+    res.json({ ok: true, id: result.insertedId });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.delete("/api/planned/:id", async (req, res) => {
+  try {
+    await db.collection("planned").deleteOne({ _id: new ObjectId(req.params.id) });
+    res.json({ ok: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // ── Claude ──
 app.post("/api/chat", async (req, res) => {
   const { prompt, system } = req.body;
