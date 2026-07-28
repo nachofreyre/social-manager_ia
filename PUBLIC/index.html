@@ -498,13 +498,13 @@ function closeModal(){document.getElementById("calModal").classList.remove("open
 async function savePlanned(dateStr){
   const title=document.getElementById("planTitle")?.value.trim();
   if(!title){alert("Escribí un título.");return;}
-  const entry={id:Date.now().toString(),date:dateStr,title,type:document.getElementById("planType")?.value||"Reels",goal:document.getElementById("planGoal")?.value||"engagement",notes:document.getElementById("planNotes")?.value||""};
-  calPlanned.push(entry);
-  localStorage.setItem("calPlanned",JSON.stringify(calPlanned));
+  const entry={date:dateStr,title,type:document.getElementById("planType")?.value||"Reels",goal:document.getElementById("planGoal")?.value||"engagement",notes:document.getElementById("planNotes")?.value||""};
+  await api("/api/planned","POST",entry);
+  await loadPlanned();
   closeModal();renderCalendar();updateProgress();
 }
 
-function deletePlanned(id){calPlanned=calPlanned.filter(p=>p.id!==id);localStorage.setItem("calPlanned",JSON.stringify(calPlanned));closeModal();renderCalendar();}
+async function deletePlanned(id){await api("/api/planned/"+id,"DELETE");await loadPlanned();closeModal();renderCalendar();}
 
 async function getSuggestions(){
   const btn=document.getElementById("suggestBtn");btn.disabled=true;btn.innerHTML='<i class="ti ti-loader"></i> Analizando...';
@@ -603,8 +603,7 @@ function updateRoadmap(){const p=getProgress();document.getElementById("rmPct").
 
 // ── Init ──
 async function init(){
-  const stored=localStorage.getItem("calPlanned");
-  if(stored)calPlanned=JSON.parse(stored);
+  await loadPlanned();
   await loadProfile();await loadAnalysis();await loadContent();await loadPosts();await loadWins();updateRoadmap();
 }
 </script>
