@@ -24,7 +24,9 @@ async function connectDB() {
 app.post("/api/login", (req, res) => {
   const { password } = req.body;
   if (password === process.env.APP_PASSWORD) {
-    res.json({ ok: true });
+    res.json({ ok: true, role: "admin" });
+  } else if (password === process.env.CM_PASSWORD) {
+    res.json({ ok: true, role: "cm" });
   } else {
     res.status(401).json({ error: "Contraseña incorrecta." });
   }
@@ -34,9 +36,10 @@ app.post("/api/login", (req, res) => {
 app.use("/api", (req, res, next) => {
   if (req.path === "/login") return next();
   const auth = req.headers["x-app-password"];
-  if (!auth || auth !== process.env.APP_PASSWORD) {
+  if (!auth || (auth !== process.env.APP_PASSWORD && auth !== process.env.CM_PASSWORD)) {
     return res.status(401).json({ error: "No autorizado." });
   }
+  req.isAdmin = auth === process.env.APP_PASSWORD;
   next();
 });
 
@@ -70,6 +73,8 @@ app.get("/api/analysis", async (req, res) => {
 app.post("/api/analysis", async (req, res) => {
   try {
     await db.collection("analysis").insertOne({ ...req.body, createdAt: new Date() });
+    // Registrar actividad CM
+    if (!req.isAdmin) await logActivity(db, "analisis", `Análisis: "${req.body.topic}"`);
     res.json({ ok: true });
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
@@ -84,6 +89,7 @@ app.get("/api/content", async (req, res) => {
 app.post("/api/content", async (req, res) => {
   try {
     await db.collection("content").insertOne({ ...req.body, createdAt: new Date() });
+    if (!req.isAdmin) await logActivity(db, "contenido", `Ideas generadas: ${req.body.type} — ${req.body.goal}`);
     res.json({ ok: true });
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
@@ -98,6 +104,7 @@ app.get("/api/wins", async (req, res) => {
 app.post("/api/wins", async (req, res) => {
   try {
     await db.collection("wins").insertOne({ ...req.body, createdAt: new Date() });
+    if (!req.isAdmin) await logActivity(db, "aprendizaje", `Aprendizaje: "${req.body.desc}"`);
     res.json({ ok: true });
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
@@ -125,6 +132,7 @@ app.post("/api/posts", async (req, res) => {
       createdAt: new Date()
     };
     const result = await db.collection("posts").insertOne(post);
+    if (!req.isAdmin) await logActivity(db, "historial", `Publicación registrada: "${req.body.title}"`);
     res.json({ ok: true, id: result.insertedId });
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
@@ -134,6 +142,7 @@ app.put("/api/posts/:id", async (req, res) => {
       { _id: new ObjectId(req.params.id) },
       { $set: { ...req.body, updatedAt: new Date() } }
     );
+    if (!req.isAdmin && req.body.metricsCompleted) await logActivity(db, "metricas", `Métricas cargadas para una publicación`);
     res.json({ ok: true });
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
@@ -154,12 +163,82 @@ app.get("/api/planned", async (req, res) => {
 app.post("/api/planned", async (req, res) => {
   try {
     const result = await db.collection("planned").insertOne({ ...req.body, createdAt: new Date() });
+    if (!req.isAdmin) await logActivity(db, "calendario", `Planificado: "${req.body.title}" para ${req.body.date}`);
     res.json({ ok: true, id: result.insertedId });
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 app.delete("/api/planned/:id", async (req, res) => {
   try {
     await db.collection("planned").deleteOne({ _id: new ObjectId(req.params.id) });
+    res.json({ ok: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// ── Actividad CM ──
+async function logActivity(db, type, description) {
+  try {
+    await db.collection("activity").insertOne({ type, description, createdAt: new Date() });
+  } catch (err) { console.error("Error logging activity:", err.message); }
+}
+app.get("/api/activity", async (req, res) => {
+  if (!req.isAdmin) return res.status(403).json({ error: "Solo admin." });
+  try {
+    const list = await db.collection("activity").find().sort({ createdAt: -1 }).limit(50).toArray();
+    res.json(list);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// ── Notas privadas (solo admin) ──
+app.get("/api/notes", async (req, res) => {
+  if (!req.isAdmin) return res.status(403).json({ error: "Solo admin." });
+  try {
+    const list = await db.collection("notes").find().sort({ createdAt: -1 }).toArray();
+    res.json(list);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.post("/api/notes", async (req, res) => {
+  if (!req.isAdmin) return res.status(403).json({ error: "Solo admin." });
+  try {
+    await db.collection("notes").insertOne({ ...req.body, createdAt: new Date() });
+    res.json({ ok: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.delete("/api/notes/:id", async (req, res) => {
+  if (!req.isAdmin) return res.status(403).json({ error: "Solo admin." });
+  try {
+    await db.collection("notes").deleteOne({ _id: new ObjectId(req.params.id) });
+    res.json({ ok: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// ── Tareas Admin → CM ──
+app.get("/api/tasks", async (req, res) => {
+  try {
+    const list = await db.collection("tasks").find().sort({ createdAt: -1 }).toArray();
+    res.json(list);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.post("/api/tasks", async (req, res) => {
+  if (!req.isAdmin) return res.status(403).json({ error: "Solo admin puede crear tareas." });
+  try {
+    await db.collection("tasks").insertOne({ ...req.body, status: "pendiente", createdAt: new Date() });
+    res.json({ ok: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.put("/api/tasks/:id", async (req, res) => {
+  try {
+    await db.collection("tasks").updateOne(
+      { _id: new ObjectId(req.params.id) },
+      { $set: { ...req.body, updatedAt: new Date() } }
+    );
+    if (!req.isAdmin) await logActivity(db, "tarea", `Tarea marcada como ${req.body.status}`);
+    res.json({ ok: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+app.delete("/api/tasks/:id", async (req, res) => {
+  if (!req.isAdmin) return res.status(403).json({ error: "Solo admin." });
+  try {
+    await db.collection("tasks").deleteOne({ _id: new ObjectId(req.params.id) });
     res.json({ ok: true });
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
